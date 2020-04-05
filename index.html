@@ -4,16 +4,96 @@
 		<link rel="stylesheet" href="styles.css">
 		<script src="https://unpkg.com/pdf-lib@1.4.0"></script>
    		<script src="https://unpkg.com/downloadjs@1.4.7"></script>
+   		<style>
+   			input[type], select {
+			  width: 50%;
+			  padding: 12px 20px;
+			  margin: 8px 0;
+			  display: inline-block;
+			  border: 1px solid #ccc;
+			  border-radius: 4px;
+			  box-sizing: border-box;
+			}
+
+			div {
+			  margin-left: 20%;
+			  margin-right: 20%;
+			  border-radius: 5px;
+			  background-color: #f2f2f2;
+			  padding: 20px;
+			}
+
+			.form-inline {  
+			  display: flex;
+			  flex-flow: row wrap;
+			  align-items: center;
+			}
+
+			.form-inline label {
+			  margin: 5px 10px 5px 0;
+			}
+
+			.form-inline input {
+			  vertical-align: middle;
+			  margin: 5px 10px 5px 0;
+			  padding: 10px;
+			  background-color: #fff;
+			  border: 1px solid #ddd;
+			}
+
+
+			input[type=button] {
+			  width: 100%;
+			  background-color: #4CAF50;
+			  color: white;
+			  padding: 14px 20px;
+			  margin: 8px 0;
+			  border: none;
+			  border-radius: 4px;
+			  cursor: pointer;
+			}
+
+			input[type=button]:hover {
+			  background-color: #45a049;
+			}
+
+			@media (max-width: 900000px) {
+			  .form-inline input {
+			    margin: 10px 0;
+			  }
+			  
+			  .form-inline {
+			    flex-direction: column;
+			    align-items: stretch;
+			  }
+			}
+		</style>
 	</head>
 
   <body>
-  	<form id="frm1">
-	  Nume: <input type="text" name="nume"><br>
-	  Prenume: <input type="text" name="prenume"><br><br>
+  	<div style="text-align: center">
+  	<h2>DECLARAȚIE PE PROPRIE RĂSPUNDERE</h2>
+  	</div>
+  	<div>
+  	<form id="frm1" class="form-inline">
+      <label for="nume">Nume</label>
+      <input type="text" name="nume" placeholder="Numele de familie">
+   
+      <label for="prenume">Prenume</label>
+      <input type="text" name="prenume" placeholder="Prenume">
+
+      <label for="data">Data nasterii</label>
+      <input type="date" name="data">
+
+      <label for="adresa">Adresa</label>
+      <input type="text" name="adresa" placeholder="Adresa unde locuiti acum">
+      <p style="font-size: 15px; max-width: 50%">Se va completa adresa locuinței în care persoana locuiește în fapt, indiferent dacă este identică sau nu cu cea menționată în actul de identitate</p>
+
 	  <input type="button" onclick="modifyPdf()" value="Descarca declaratia">
 	</form>
+  	</div>
 
-    <p class="small">(Your browser will download the resulting file)</p>
+    <p class="small">(Se va salva documentul sau vi se va deschide intr-o pagina si va trebui sa il salvati dvs.)</p>
   </body>
   <script>
   	const {
@@ -69,27 +149,9 @@ async function modifyPdf() {
 	};
 
 
-	const fillInField = (pdfDoc, fieldName, text, alreadyFilledIn) => {
+	const fillInField = (pdfDoc, fieldName, text) => {
 	  const toFillField = findAcroFieldByName(pdfDoc, fieldName);
-	  const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
 	  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
-	  if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
-	  pdfFields = ['DA', 'DR', 'F', 'FT', 'Subtype', 'Type', 'V']
-	  for(let i = 0; i < pdfFields.length; i++) {
-	  	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
-	  }
-	  //toFillField.set(PDFName.of('V'), PDFString.of(text));
-	};
-
-	const fillInField2 = (pdfDoc, fieldName, text, alreadyFilledIn) => {
-	  const toFillField = findAcroFieldByName(pdfDoc, fieldName);
-	  const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
-	  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
-	  if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
-	  pdfFields = ['DA', 'DR', 'F', 'FT', 'Subtype', 'Type', 'V']
-	  // for(let i = 0; i < pdfFields.length; i++) {
-	  // 	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
-	  // }
 	  toFillField.set(PDFName.of('V'), PDFString.of(text));
 	};
 
@@ -104,16 +166,6 @@ async function modifyPdf() {
 	  }
 	};
 
-	// Have to manually create this.
-	// Field names can be found using `logAcroFieldNames(pdfDoc)`
-	const fieldNames = {
-	  nume: 'nume',
-	  prenume: 'prenume',
-	  data: 'data',
-	  radio2: 'Check Box2',
-	};
-
-
 	const main = async function () {
 	  const url = './declaratie-buna.pdf'
 	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
@@ -123,11 +175,9 @@ async function modifyPdf() {
 	  const acroForm = getAcroForm(pdfDoc);
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
-	  fillInField(pdfDoc, fieldNames.prenume, 'Corneliu', 'nume');
-	  fillInField2(pdfDoc, 'anul', '2020', 'nume');
 	  fillInRadioButton(pdfDoc, 'Check Box3', 'Check Box1');
-	  findAcroFieldByName(pdfDoc, 'nume').set(PDFName.of('V'), PDFString.of(x.elements[0].value));
-	  findAcroFieldByName(pdfDoc, 'prenume').set(PDFName.of('V'), PDFString.of(x.elements[1].value));	  
+	  fillInField(pdfDoc, 'nume', x.elements[0].value);
+	  fillInField(pdfDoc, 'prenume', x.elements[1].value);
 	  logAcroFieldNames(pdfDoc);
 
 	  const pdfBytes = await pdfDoc.save();
@@ -139,3 +189,24 @@ async function modifyPdf() {
 }
 </script>
 </html>
+
+<!--
+//TODO
+-fix fillInField just with the value
+-draw on the pdf, along with writing the values, for portability -if one wants to change his file-
+-fix stuff with checkboxes - take care if i bifate 1 and 2, stuff...
+-today's date default
+-add semnatura
+-support open existing file - updating the date in real time
+
+ var mycanvas = document.getElementById("signature-pad"); //get your canvas
+var image = mycanvas.toDataURL("image/png"); //Convert
+document.getElementById("semnatura_hidden").src = image;
+image = image.replace('data:image/png;base64,', '');
+document.getElementById("semnatura_hidden").value = image;
+
+doc.addImage(image, "PNG", 125, 170, 50, 25);
+
+thats how they do it
+--	>
+
