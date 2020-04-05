@@ -7,7 +7,12 @@
 	</head>
 
   <body>
-    <button onclick="modifyPdf()">Modify PDF</button>
+  	<form id="frm1">
+	  Nume: <input type="text" name="nume"><br>
+	  Prenume: <input type="text" name="prenume"><br><br>
+	  <input type="button" onclick="modifyPdf()" value="Descarca declaratia">
+	</form>
+
     <p class="small">(Your browser will download the resulting file)</p>
   </body>
   <script>
@@ -24,6 +29,8 @@
 	} = PDFLib
 
 async function modifyPdf() {
+
+	var x = document.getElementById("frm1");
 
 	const getAcroForm = (pdfDoc) => {
 	  return pdfDoc.context.lookup(pdfDoc.catalog.get(PDFName.of('AcroForm')));
@@ -119,13 +126,14 @@ async function modifyPdf() {
 	  fillInField(pdfDoc, fieldNames.prenume, 'Corneliu', 'nume');
 	  fillInField2(pdfDoc, 'anul', '2020', 'nume');
 	  fillInRadioButton(pdfDoc, 'Check Box3', 'Check Box1');
-	  findAcroFieldByName(pdfDoc, 'nume').set(PDFName.of('V'), PDFString.of('denis'));
+	  findAcroFieldByName(pdfDoc, 'nume').set(PDFName.of('V'), PDFString.of(x.elements[0].value));
+	  findAcroFieldByName(pdfDoc, 'prenume').set(PDFName.of('V'), PDFString.of(x.elements[1].value));	  
 	  logAcroFieldNames(pdfDoc);
 
 	  const pdfBytes = await pdfDoc.save();
 
 	  // Trigger the browser to download the PDF document
-	  download(pdfBytes, "pdf-lib_modification_example.jpg", "image/jpeg");
+	  download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
 	 }
 	main();	
 }
