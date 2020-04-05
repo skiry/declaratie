@@ -87,8 +87,7 @@ const fillAcroTextField = (
 const fillInField = (pdfDoc, fieldName, text, fontSize) => {
   const field = findAcroFieldByName(pdfDoc, fieldName);
   if (!field) throw new Error(`Missing AcroField: ${fieldName}`);
-  const [FontHelvetica] = pdfDoc.embedStandardFont('Helvetica');
-  fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
+  fillAcroTextField(pdfDoc, field, "FontHelvetica", text, fontSize);
 };
 
 // Have to manually create this.
@@ -108,6 +107,7 @@ const main = async function () {
   // Load a PDFDocument from the existing PDF bytes
   const pdfDoc = await PDFDocument.load(existingPdfBytes)
 
+  //const [FontHelvetica] = pdfDoc.embedStandardFont('Helvetica');
 
   const acroForm = getAcroForm(pdfDoc);
   acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
