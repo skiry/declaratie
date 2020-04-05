@@ -119,6 +119,7 @@ async function modifyPdf() {
 	  fillInField(pdfDoc, fieldNames.prenume, 'Corneliu', 'nume');
 	  fillInField2(pdfDoc, 'anul', '2020', 'nume');
 	  fillInRadioButton(pdfDoc, 'Check Box3', 'Check Box1');
+	  findAcroFieldByName(pdfDoc, 'nume').set(PDFName.of('V'), PDFString.of('denis'));
 	  logAcroFieldNames(pdfDoc);
 
 	  const pdfBytes = await pdfDoc.save();
