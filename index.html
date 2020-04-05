@@ -99,11 +99,10 @@ const fillInRadioButton = (pdfDoc, fieldName, alreadyFilledIn) => {
   if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
   if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
   // fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
-  const rect = toFillField.get(PDFName.of('Rect'));
-  const t = toFillField.get(PDFName.of('T'));
-  toFillField = filledField;
-  toFillField.set(PDFName.of('Rect'), rect);
-  toFillField.set(PDFName.of('T'), t);
+  pdfFields = ['AP', 'AS', 'BS', 'DA', 'F', 'FT', 'Ff', 'MK', 'P', 'Subtype', 'Type', 'V']
+  for(let i = 0; i < pdfFields.length(); i++) {
+  	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
+  }
 };
 // Have to manually create this.
 // Field names can be found using `logAcroFieldNames(pdfDoc)`
