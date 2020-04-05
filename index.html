@@ -126,7 +126,6 @@ const main = async function () {
   const acroForm = getAcroForm(pdfDoc);
   acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
-  fillInField(pdfDoc, fieldNames.nume, 'Ionut');
   fillInField(pdfDoc, fieldNames.prenume, 'Corneliu');
   fillInField(pdfDoc, fieldNames.data, '05.04.2020');
   fillInRadioButton(pdfDoc, '3', '5');
