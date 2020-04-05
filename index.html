@@ -96,7 +96,8 @@ const fillInField = (pdfDoc, fieldName, text, fontSize) => {
 const fillInRadioButton = (pdfDoc, fieldName, alreadyFilledIn) => {
   var toFillField = findAcroFieldByName(pdfDoc, fieldName);
   const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
-  if (!field) throw new Error(`Missing AcroField: ${fieldName}`);
+  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
+  if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
   // fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
   const rect = toFillField.get(PDFName.of('Rect'));
   const t = toFillField.get(PDFName.of('T'));
