@@ -67,7 +67,7 @@ async function modifyPdf() {
 	  const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
 	  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
 	  if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
-	  pdfFields = ['DA', 'DR', 'F', 'FT', 'Subtype', 'Type', 'AP', 'P', 'V']
+	  pdfFields = ['DA', 'DR', 'F', 'FT', 'Subtype', 'Type', 'AP', 'V']
 	  for(let i = 0; i < pdfFields.length; i++) {
 	  	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
 	  }
@@ -79,7 +79,7 @@ async function modifyPdf() {
 	  const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
 	  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
 	  if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
-	  pdfFields = ['DA', 'DR', 'F', 'FT', 'Subtype', 'Type', 'AP', 'P', 'V']
+	  pdfFields = ['DA', 'DR', 'F', 'FT', 'Subtype', 'Type', 'AP', 'V']
 	  for(let i = 0; i < pdfFields.length; i++) {
 	  	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
 	  }
