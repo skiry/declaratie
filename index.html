@@ -96,7 +96,7 @@ async function modifyPdf() {
 
 
 	const main = async function () {
-	  const url = './decl2.pdf'
+	  const url = './declaratie-buna.pdf'
 	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
 
 	  // Load a PDFDocument from the existing PDF bytes
@@ -104,7 +104,7 @@ async function modifyPdf() {
 	  const acroForm = getAcroForm(pdfDoc);
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
-	  fillInField(pdfDoc, fieldNames.prenume, 'Corneliu', 'nume');
+	  //fillInField(pdfDoc, fieldNames.prenume, 'Corneliu', 'nume');
 	  //fillInField(pdfDoc, fieldNames.data, '05.04.2020', 'nume');
 	  fillInRadioButton(pdfDoc, '3', '5');
 	  logAcroFieldNames(pdfDoc);
