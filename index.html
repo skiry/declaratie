@@ -79,11 +79,6 @@ const fillAcroTextField = (
   // fontSize = 15,
 ) => {
   acroField.set(PDFName.of('V'), PDFString.of(text));
-  acroField.set(PDFName.of('Ff'), PDFNumber.of(
-    1 << 0 // Read Only
-    |
-    1 << 12 // Multiline
-  ));
 };
 
 const fillInField = (pdfDoc, fieldName, text, fontSize) => {
