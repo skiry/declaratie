@@ -14,36 +14,110 @@
   	const { degrees, PDFDocument, rgb, StandardFonts } = PDFLib
 
     async function modifyPdf() {
-      // Fetch an existing PDF document
-      const url = './decl2.pdf'
-  	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
 
-      // Load a PDFDocument from the existing PDF bytes
-      const pdfDoc = await PDFDocument.load(existingPdfBytes)
+      const getAcroFields = (pdfDoc) => {
+  if (!pdfDoc.catalog.getMaybe('AcroForm')) return [];
+  const acroForm = pdfDoc.index.lookup(pdfDoc.catalog.get('AcroForm'));
 
-      // Embed the Helvetica font
-      const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica)
+  if (!acroForm.getMaybe('Fields')) return [];
+  const acroFields = pdfDoc.index.lookup(acroForm.get('Fields'));
 
-      // Get the first page of the document
-      const pages = pdfDoc.getPages()
-      const firstPage = pages[0]
+  return acroFields.array.map(pdfDoc.index.lookup);
+};
 
-      // Get the width and height of the first page
-      const { width, height } = firstPage.getSize()
+const findAcroFieldByName = (pdfDoc, name) => {
+  const acroFields = getAcroFields(pdfDoc);
+  return acroFields.find((acroField) => {
+    const fieldName = acroField.getMaybe('T');
+    return !!fieldName && fieldName.string === name;
+  });
+};
 
-      // Draw a string of text diagonally across the first page
-      firstPage.drawText('STRICT SECRET!', {
-        x: 5,
-        y: height / 2 + 300,
-        size: 50,
-        font: helveticaFont,
-        color: rgb(0.95, 0.1, 0.1),
-        rotate: degrees(-45),
+const fillAcroTextField = (
+  pdfDoc,
+  acroField,
+  fontObject,
+  text,
+  fontSize = 15,
+) => {
+  const fieldRect = acroField.get('Rect');
+  const fieldWidth = fieldRect.get(2).number - fieldRect.get(0).number;
+  const fieldHeight = fieldRect.get(3).number - fieldRect.get(1).number;
+
+  const appearanceStream = pdfDoc.register(
+    PDFContentStream.of(
+      PDFDictionary.from({
+        Type: PDFName.from('XObject'),
+        Subtype: PDFName.from('Form'),
+        BBox: PDFArray.fromArray([
+          PDFNumber.fromNumber(0),
+          PDFNumber.fromNumber(0),
+          PDFNumber.fromNumber(fieldWidth),
+          PDFNumber.fromNumber(fieldHeight),
+        ], pdfDoc.index),
+        Resources: PDFDictionary.from({
+          Font: PDFDictionary.from({
+            FontObject: fontObject
+          }, pdfDoc.index)
+        }, pdfDoc.index),
+      }, pdfDoc.index),
+      drawLinesOfText(text.split('\n'), {
+        x: 2,
+        y: fieldHeight - 13,
+        font: 'FontObject',
+        size: fontSize,
+        colorRgb: [0, 0, 0],
       })
+    ),
+  );
 
-      // Serialize the PDFDocument to bytes (a Uint8Array)
-      const pdfBytes = await pdfDoc.save()
+  acroField.set('V', PDFString.fromString(text));
+  acroField.set('Ff', PDFNumber.fromNumber(1));
+  acroField.set('AP', PDFDictionary.from({ N: appearanceStream }, pdfDoc.index));
+};
 
+const pdfDoc = PDFDocumentFactory.load(fs.readFileSync('./decl2.pdf'));
+
+// ...Embed fonts and images...
+// ...Define hardcoded field names dictionary...
+
+const fillInField = (fieldName, text, fontSize) => {
+  const field = findAcroFieldByName(pdfDoc, fieldName);
+  if (!field) throw new Error(`Missing AcroField: ${fieldName}`);
+  fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
+};
+
+fillInField(fieldNames.nume, 'Ionut');
+fillInField(fieldNames.prenume, 'Corneliu');
+fillInField(fieldNames.data, '05.04.2020');
+
+// ...Fill in remaining fields...
+/*
+const contentStream = pdfDoc.register(
+  pdfDoc.createContentStream(
+    drawImage('MarioImage', {
+      x: 50,
+      y: 450,
+      width: marioImageDims.width * 0.6,
+      height: marioImageDims.height * 0.6,
+    }),
+    drawImage('MarioEmblem', {
+      x: 447,
+      y: 520,
+      width: marioEmblemDims.width * 0.75,
+      height: marioEmblemDims.height * 0.75,
+    }),
+  ),
+);*/
+
+const pages = pdfDoc.getPages();
+
+pages[0]
+  //.addImageObject('MarioImage', marioImageRef)
+  //.addImageObject('MarioEmblem', marioEmblemRef)
+  .addContentStreams(contentStream);
+
+const pdfBytes = PDFDocumentWriter.saveToBytes(pdfDoc);
 			// Trigger the browser to download the PDF document
       download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
     }
