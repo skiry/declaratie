@@ -63,7 +63,9 @@ const logAcroFieldNames = (pdfDoc) => {
       'Field Type:',
       acroField.get(PDFName.of('FT')).toString(),
       'Field Value:',
-      acroField.get(PDFName.of('V'))
+      acroField.get(PDFName.of('V')),
+      'All',
+      acroField
     );
   });
 };
@@ -116,7 +118,7 @@ const main = async function () {
   fillInField(pdfDoc, fieldNames.nume, 'Ionut');
   fillInField(pdfDoc, fieldNames.prenume, 'Corneliu');
   fillInField(pdfDoc, fieldNames.data, '05.04.2020');
-  fillInField(pdfDoc, fieldNames.radio1, 'True')
+  fillInField(pdfDoc, fieldNames.radio1, '/Choice1')
   logAcroFieldNames(pdfDoc);
 
 
