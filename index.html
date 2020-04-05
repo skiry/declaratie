@@ -93,6 +93,17 @@ const fillInField = (pdfDoc, fieldName, text, fontSize) => {
   fillAcroTextField(field, text);
 };
 
+const fillInRadioButton = (pdfDoc, fieldName, alreadyFilledIn) => {
+  var toFillField = findAcroFieldByName(pdfDoc, fieldName);
+  const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
+  if (!field) throw new Error(`Missing AcroField: ${fieldName}`);
+  // fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
+  const rect = toFillField.get(PDFName.of('Rect'));
+  const t = toFillField.get(PDFName.of('T'));
+  toFillField = filledField;
+  toFillField.set(PDFName.of('Rect'), rect);
+  toFillField.set(PDFName.of('T'), t);
+};
 // Have to manually create this.
 // Field names can be found using `logAcroFieldNames(pdfDoc)`
 const fieldNames = {
@@ -118,7 +129,7 @@ const main = async function () {
   fillInField(pdfDoc, fieldNames.nume, 'Ionut');
   fillInField(pdfDoc, fieldNames.prenume, 'Corneliu');
   fillInField(pdfDoc, fieldNames.data, '05.04.2020');
-  fillInField(pdfDoc, fieldNames.radio1, '/Choice1')
+  fillInRadioButton(pdfDoc, '3', '5');
   logAcroFieldNames(pdfDoc);
 
 
