@@ -72,16 +72,15 @@ const logAcroFieldNames = (pdfDoc) => {
 
 
 const fillInField = (pdfDoc, fieldName, text, alreadyFilledIn) => {
-  const field = findAcroFieldByName(pdfDoc, fieldName);
+  const toFillField = findAcroFieldByName(pdfDoc, fieldName);
   const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
+  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
   if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
-  if (!field) throw new Error(`Missing AcroField: ${fieldName}`);
-  // fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
   pdfFields = ['AP', 'DA', 'DR', 'F', 'FT', 'P', 'Subtype', 'Type']
   for(let i = 0; i < pdfFields.length; i++) {
   	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
   }
-  field.set(PDFName.of('V'), PDFString.of(text));
+  toFillField.set(PDFName.of('V'), PDFString.of(text));
 };
 
 const fillInRadioButton = (pdfDoc, fieldName, alreadyFilledIn) => {
@@ -89,7 +88,6 @@ const fillInRadioButton = (pdfDoc, fieldName, alreadyFilledIn) => {
   const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
   if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
   if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
-  // fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
   pdfFields = ['AP', 'AS', 'BS', 'DA', 'F', 'FT', 'Ff', 'MK', 'P', 'Subtype', 'Type', 'V']
   for(let i = 0; i < pdfFields.length; i++) {
   	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
