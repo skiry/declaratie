@@ -59,11 +59,11 @@ const logAcroFieldNames = (pdfDoc) => {
   acroFields.forEach((acroField) => {
     console.log(
       'Field Name:',
-      acroField.get('T').toString(),
+      acroField.get(PDFName.of('T')).toString(),
       'Field Type:',
-      acroField.get('FT').toString(),
+      acroField.get(PDFName.of('FT')).toString(),
       'Field Value:',
-      acroField.get('V').toString()
+      acroField.get(PDFName.of('V')).toString()
     );
   });
 };
