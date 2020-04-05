@@ -70,14 +70,14 @@ const logAcroFieldNames = (pdfDoc) => {
 
 
 const fillAcroTextField = (
-  pdfDoc,
+  // pdfDoc,
   acroField,
-  fontObject,
+  // fontObject,
   text,
-  fontSize = 15,
+  // fontSize = 15,
 ) => {
-  acroField.set('V', PDFString.fromString(text));
-  acroField.set('Ff', PDFNumber.fromNumber(
+  acroField.set(PDFName.of('V'), PDFString.of(text));
+  acroField.set(PDFName.of('Ff'), PDFNumber.of(
     1 << 0 // Read Only
     |
     1 << 12 // Multiline
@@ -87,7 +87,8 @@ const fillAcroTextField = (
 const fillInField = (pdfDoc, fieldName, text, fontSize) => {
   const field = findAcroFieldByName(pdfDoc, fieldName);
   if (!field) throw new Error(`Missing AcroField: ${fieldName}`);
-  fillAcroTextField(pdfDoc, field, "FontHelvetica", text, fontSize);
+  // fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
+  fillAcroTextField(field, text);
 };
 
 // Have to manually create this.
