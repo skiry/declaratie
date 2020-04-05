@@ -63,7 +63,7 @@ const logAcroFieldNames = (pdfDoc) => {
       'Field Type:',
       acroField.get(PDFName.of('FT')).toString(),
       'Field Value:',
-      acroField.get(PDFName.of('V')).toString()
+      acroField.get(PDFName.of('V'))
     );
   });
 };
