@@ -67,7 +67,19 @@ async function modifyPdf() {
 	  const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
 	  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
 	  if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
-	  pdfFields = ['DA', 'DR', 'F', 'FT', 'Subtype', 'Type']
+	  pdfFields = ['DA', 'DR', 'F', 'FT', 'Subtype', 'Type', 'AP', 'P', 'Rect', 'V']
+	  for(let i = 0; i < pdfFields.length; i++) {
+	  	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
+	  }
+	  //toFillField.set(PDFName.of('V'), PDFString.of(text));
+	};
+
+	const fillInField2 = (pdfDoc, fieldName, text, alreadyFilledIn) => {
+	  const toFillField = findAcroFieldByName(pdfDoc, fieldName);
+	  const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
+	  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
+	  if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
+	  pdfFields = ['DA', 'DR', 'F', 'FT', 'Subtype', 'Type', 'AP', 'P', 'Rect', 'V']
 	  for(let i = 0; i < pdfFields.length; i++) {
 	  	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
 	  }
@@ -105,7 +117,7 @@ async function modifyPdf() {
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
 	  fillInField(pdfDoc, fieldNames.prenume, 'Corneliu', 'nume');
-	  //fillInField(pdfDoc, fieldNames.data, '05.04.2020', 'nume');
+	  fillInField2(pdfDoc, 'anul', '2020', 'nume');
 	  fillInRadioButton(pdfDoc, 'Check Box3', 'Check Box1');
 	  logAcroFieldNames(pdfDoc);
 
