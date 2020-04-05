@@ -12,25 +12,25 @@
   </body>
   <script>
   	const {
-  drawImage,
-  drawLinesOfText,
-  drawRectangle,
-  drawText,
-  PDFArray,
-  PDFContentStream,
-  PDFDictionary,
-  PDFDocument,
-  PDFDocumentFactory,
-  PDFDocumentWriter,
-  PDFIndirectReference,
-  PDFName,
-  PDFNumber,
-  PDFRawStream,
-  PDFString,
-  PDFBool
-} = PDFLib
+	  drawImage,
+	  drawLinesOfText,
+	  drawRectangle,
+	  drawText,
+	  PDFArray,
+	  PDFContentStream,
+	  PDFDictionary,
+	  PDFDocument,
+	  PDFDocumentFactory,
+	  PDFDocumentWriter,
+	  PDFIndirectReference,
+	  PDFName,
+	  PDFNumber,
+	  PDFRawStream,
+	  PDFString,
+	  PDFBool
+	} = PDFLib
 
-    async function modifyPdf() {
+async function modifyPdf() {
 
 const getAcroForm = (pdfDoc) => {
   return pdfDoc.context.lookup(pdfDoc.catalog.get(PDFName.of('AcroForm')));
@@ -54,27 +54,30 @@ const findAcroFieldByName = (pdfDoc, name) => {
   });
 };
 
-// const logAcroFieldNames = (pdfDoc) => {
-//   const acroFields = getAcroFields(pdfDoc);
-//   acroFields.forEach((acroField) => {
-//     console.log(
-//       'Field Name:',
-//       acroField.get('T').toString(),
-//       'Field Type:',
-//       acroField.get('FT').toString()
-//     );
-//   });
-// };
+const logAcroFieldNames = (pdfDoc) => {
+  const acroFields = getAcroFields(pdfDoc);
+  acroFields.forEach((acroField) => {
+    console.log(
+      'Field Name:',
+      acroField.get('T').toString(),
+      'Field Type:',
+      acroField.get('FT').toString(),
+      'Field Value:',
+      acroField.get('V').toString()
+    );
+  });
+};
+
 
 const fillAcroTextField = (
-  // pdfDoc,
+  pdfDoc,
   acroField,
-  // fontObject,
+  fontObject,
   text,
-  // fontSize = 15,
+  fontSize = 15,
 ) => {
-  acroField.set(PDFName.of('V'), PDFString.of(text));
-  acroField.set(PDFName.of('Ff'), PDFNumber.of(
+  acroField.set('V', PDFString.fromString(text));
+  acroField.set('Ff', PDFNumber.fromNumber(
     1 << 0 // Read Only
     |
     1 << 12 // Multiline
@@ -84,8 +87,8 @@ const fillAcroTextField = (
 const fillInField = (pdfDoc, fieldName, text, fontSize) => {
   const field = findAcroFieldByName(pdfDoc, fieldName);
   if (!field) throw new Error(`Missing AcroField: ${fieldName}`);
-  // fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
-  fillAcroTextField(field, text);
+  const [FontHelvetica] = pdfDoc.embedStandardFont('Helvetica');
+  fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
 };
 
 // Have to manually create this.
@@ -94,7 +97,9 @@ const fieldNames = {
   nume: 'nume',
   prenume: 'prenume',
   data: 'data',
+  radio1: '3',
 };
+
 
 const main = async function () {
   const url = './decl2.pdf'
@@ -103,7 +108,6 @@ const main = async function () {
   // Load a PDFDocument from the existing PDF bytes
   const pdfDoc = await PDFDocument.load(existingPdfBytes)
 
-  // const [FontHelvetica] = pdfDoc.embedStandardFont('Helvetica');
 
   const acroForm = getAcroForm(pdfDoc);
   acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
@@ -111,6 +115,8 @@ const main = async function () {
   fillInField(pdfDoc, fieldNames.nume, 'Ionut');
   fillInField(pdfDoc, fieldNames.prenume, 'Corneliu');
   fillInField(pdfDoc, fieldNames.data, '05.04.2020');
+  fillInField(pdfDoc, fieldNames.radio1, 'True')
+
 
 
 
@@ -118,7 +124,7 @@ const main = async function () {
 
   // Trigger the browser to download the PDF document
   download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
-    }
+ }
     main();
 }
 </script>
