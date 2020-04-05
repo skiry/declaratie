@@ -76,7 +76,7 @@ const fillAcroTextField = (
   acroField.set('AP', PDFDictionary.from({ N: appearanceStream }, pdfDoc.index));
 };
 
-const pdfDoc = PDFDocumentFactory.load(fs.readFileSync('./decl2.pdf'));
+const pdfDoc = PDFDocument.load(fs.readFileSync('./decl2.pdf'));
 
 // ...Embed fonts and images...
 // ...Define hardcoded field names dictionary...
