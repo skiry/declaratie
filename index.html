@@ -71,21 +71,17 @@ const logAcroFieldNames = (pdfDoc) => {
 };
 
 
-const fillAcroTextField = (
-  // pdfDoc,
-  acroField,
-  // fontObject,
-  text,
-  // fontSize = 15,
-) => {
-  acroField.set(PDFName.of('V'), PDFString.of(text));
-};
-
-const fillInField = (pdfDoc, fieldName, text, fontSize) => {
+const fillInField = (pdfDoc, fieldName, text, alreadyFilledIn) => {
   const field = findAcroFieldByName(pdfDoc, fieldName);
+  const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
+  if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
   if (!field) throw new Error(`Missing AcroField: ${fieldName}`);
   // fillAcroTextField(pdfDoc, field, FontHelvetica, text, fontSize);
-  fillAcroTextField(field, text);
+  pdfFields = ['AP', 'DA', 'DR', 'F', 'FT', 'P', 'Subtype', 'Type']
+  for(let i = 0; i < pdfFields.length; i++) {
+  	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
+  }
+  field.set(PDFName.of('V'), PDFString.of(text));
 };
 
 const fillInRadioButton = (pdfDoc, fieldName, alreadyFilledIn) => {
@@ -121,8 +117,8 @@ const main = async function () {
   const acroForm = getAcroForm(pdfDoc);
   acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
-  fillInField(pdfDoc, fieldNames.prenume, 'Corneliu');
-  fillInField(pdfDoc, fieldNames.data, '05.04.2020');
+  fillInField(pdfDoc, fieldNames.prenume, 'Corneliu', 'nume');
+  fillInField(pdfDoc, fieldNames.data, '05.04.2020', 'nume');
   fillInRadioButton(pdfDoc, '3', '5');
   logAcroFieldNames(pdfDoc);
 
