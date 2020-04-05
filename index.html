@@ -58,6 +58,10 @@ const logAcroFieldNames = (pdfDoc) => {
   const acroFields = getAcroFields(pdfDoc);
   acroFields.forEach((acroField) => {
     console.log(
+      'Field Name:',
+      acroField.get(PDFName.of('T')).toString(),
+      'Field Value:',
+      acroField.get(PDFName.of('V')),
       'All',
       acroField
     );
@@ -110,7 +114,7 @@ const main = async function () {
   acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
   fillInField(pdfDoc, fieldNames.prenume, 'Corneliu', 'nume');
-  //fillInField(pdfDoc, fieldNames.data, '05.04.2020', 'nume');
+  fillInField(pdfDoc, fieldNames.data, '05.04.2020', 'nume');
   fillInRadioButton(pdfDoc, '3', '5');
   logAcroFieldNames(pdfDoc);
 
