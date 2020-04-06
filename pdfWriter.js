@@ -139,17 +139,17 @@ async function modifyPdf() {
 	  	if (checkboxes[1].checked) {
 		  	if (found > 0) {
 		  		// there is another one we can copy from
-		  		console.log("da")
 		  		// deactivate the first one
 		  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box2');
-		  		console.log("Da2")
+		  		findAcroFieldByName(pdfDoc, 'Check Box1').set(PDFName.of('V'), PDFString.of('No'));
 		  		// activate the second one by copying one that is filled in
 		  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box'.concat((found + 1).toString()));
-		  		console.log("finished")
 		  	}
 		  	else {
 		  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
 		  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box3');
+		  	 	findAcroFieldByName(pdfDoc, 'Check Box1').set(PDFName.of('V'), PDFString.of('No'));
+
 		  	}
 		}
 	  	// if the second is, activate it with one of the above
@@ -182,10 +182,12 @@ async function modifyPdf() {
 	      })
 
 	  const pdfBytes = await pdfDoc.save();
+
 	  console.log(pdfBytes);
 	  const blob = new Blob([pdfBytes], {type: 'application/pdf'});
 		const blobURL = URL.createObjectURL(blob);
 		window.open(blobURL)
+
 	  let numeFisier = "declaratie-proprie-raspundere-".concat(document.getElementsByName("prenume")[0].value).concat(".pdf");
 	  // Trigger the browser to download the PDF document
 	  download(pdfBytes, numeFisier, "application/pdf");
@@ -198,7 +200,7 @@ async function modifyPdf() {
 /*
 //TODO
 -fix the bug with the checkboxes fillin
--schimba data
-
+-schimba data nasterii input
+-review intrebari-frumos
 */
 
