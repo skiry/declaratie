@@ -103,6 +103,7 @@ async function modifyPdf() {
 	    font: helveticaFont
 	  })
 	}
+
 	  let zi = document.getElementsByName("zi")[0].value;
 	  firstPage.drawText(zi, {
 	    x: 164,
@@ -188,9 +189,9 @@ async function modifyPdf() {
 
 	  const pdfBytes = await pdfDoc.save();
 
-	  const blob = new Blob([pdfBytes], {type: 'application/pdf'});
-		const blobURL = URL.createObjectURL(blob);
-		window.open(blobURL)
+	  //const blob = new Blob([pdfBytes], {type: 'application/pdf'});
+		//const blobURL = URL.createObjectURL(blob);
+		//window.open(blobURL)
 
 	  let numeFisier = "declaratie-proprie-raspundere-".concat(document.getElementsByName("prenume")[0].value).concat(".pdf");
 	  // Trigger the browser to download the PDF document
