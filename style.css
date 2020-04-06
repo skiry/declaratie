@@ -36,11 +36,10 @@ input[type=button] {
   background-color: #4CAF50;
   color: white;
   padding: 12px 20px;
-  border: none;
+  margin-top: 5px;
   border-radius: 4px;
   cursor: pointer;
-  float: right;
-  width: 100%;
+  width: 300px;
 }
 
 #clear {
@@ -171,9 +170,10 @@ input[type=button]:hover {
   padding: 18px;
   width: 100%;
   text-align: left;
-  border: none;
   outline: none;
   transition: 0.4s;
+  border: 1px;
+  border-style: solid;
 }
 
 /* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
@@ -187,6 +187,19 @@ input[type=button]:hover {
   background-color: white;
   display: none;
   overflow: hidden;
+}
+
+i {
+  border: solid black;
+  border-width: 0 3px 3px 0;
+  display: inline-block;
+  padding: 3px;
+}
+
+
+.down {
+  transform: rotate(45deg);
+  -webkit-transform: rotate(45deg);
 }
 
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
