@@ -4,216 +4,23 @@
 		<meta name="description" content="Formular pentru generarea declaratiei">
 		<meta name="author" content="Farauanu Ionut">
    		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="stylesheet" type="text/css" href="style.css">
 		<script src="https://unpkg.com/pdf-lib@1.4.0"></script>
    		<script src="https://unpkg.com/downloadjs@1.4.7"></script>
    		<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
-		<style>
-		* {
-		  box-sizing: border-box;
-		}
-
-		input[type=text], select, textarea {
-		  width: 100%;
-		  padding: 12px;
-		  border: 1px solid #ccc;
-		  border-radius: 4px;
-		  resize: vertical;
-		}
-
-		input[type=date], select, textarea {
-		  width: 100%;
-		  padding: 12px;
-		  border: 1px solid #ccc;
-		  border-radius: 4px;
-		  resize: vertical;
-		}
-
-		label:not(.container_cb) {
-		  padding: 12px 12px 12px 0;
-		  display: inline-block;
-		}
-
-		input[type=button] {
-		  background-color: #4CAF50;
-		  color: white;
-		  padding: 12px 20px;
-		  border: none;
-		  border-radius: 4px;
-		  cursor: pointer;
-		  float: right;
-		  width: 100%;
-		}
-
-		#clear {
-		  background-color: #3483eb;
-		  color: white;
-		  padding: 12px 20px;
-		  margin-top: 5px;
-		  border-radius: 4px;
-		  cursor: pointer;
-		  width: 300px;
-		}
-
-		input[type=button]:hover {
-		  background-color: #45a049;
-		}
-
-		.container {
-		  border-radius: 5px;
-		  background-color: #f2f2f2;
-		  padding: 20px;
-		}
-
-		.col-20 {
-		  float: left;
-		  width: 20%;
-		  margin-top: 6px;
-		}
-
-		.col-80 {
-		  float: left;
-		  width: 80%;
-		  margin-top: 6px;
-		}
-
-		/* Clear floats after the columns */
-		.row:after {
-		  content: "";
-		  display: table;
-		  clear: both;
-		}
-
-		.container_cb {
-		  display: block;
-		  position: relative;
-		  padding-left: 35px;
-		  margin-bottom: 12px;
-		  cursor: pointer;
-		  font-size: 22px;
-		  -webkit-user-select: none;
-		  -moz-user-select: none;
-		  -ms-user-select: none;
-		  user-select: none;
-		}
-
-		/* Hide the browser's default checkbox */
-		.container_cb input {
-		  position: absolute;
-		  opacity: 0;
-		  cursor: pointer;
-		  height: 0;
-		  width: 0;
-		}
-
-		/* Create a custom checkbox */
-		.checkmark {
-		  position: absolute;
-		  top: 0;
-		  left: 0;
-		  height: 25px;
-		  width: 25px;
-		  background-color: #ffffff;
-		}
-
-		/* On mouse-over, add a green background color */
-		.container_cb:hover input ~ .checkmark {
-		  background-color: #f51b02;
-		}
-
-		/* When the checkbox is checked, add a blue background */
-		.container_cb input:checked ~ .checkmark{
-		  background-color: #038738;
-		}
-
-		/* Create the checkmark/indicator (hidden when not checked) */
-		.checkmark:after {
-		  content: "";
-		  position: absolute;
-		  display: none;
-		}
-
-		/* Show the checkmark when checked */
-		.container_cb input:checked ~ .checkmark:after {
-		  display: block;
-		}
-
-		/* Style the checkmark/indicator */
-		.container_cb .checkmark:after {
-		  left: 9px;
-		  top: 5px;
-		  width: 5px;
-		  height: 10px;
-		  border: solid white;
-		  border-width: 0 3px 3px 0;
-		  -webkit-transform: rotate(45deg);
-		  -ms-transform: rotate(45deg);
-		  transform: rotate(45deg);
-		}
-
-		.wrapper {
-		  position: relative;
-		  width: 300px;
-		  height: 200px;
-		  -moz-user-select: none;
-		  -webkit-user-select: none;
-		  -ms-user-select: none;
-		  user-select: none;
-		}
-
-		.signature-pad {
-		  position: absolute;
-		  border-style: double;
-		  left: 0;
-		  top: 0;
-		  width:300px;
-		  height:200px;
-		  background-color: white;
-		}
-
-		.accordion {
-		  background-color: #eee;
-		  color: #444;
-		  cursor: pointer;
-		  padding: 18px;
-		  width: 100%;
-		  text-align: left;
-		  border: none;
-		  outline: none;
-		  transition: 0.4s;
-		}
-
-		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
-		.active, .accordion:hover {
-		  background-color: #ccc;
-		}
-
-		/* Style the accordion panel. Note: hidden by default */
-		.panel {
-		  padding: 0 18px;
-		  background-color: white;
-		  display: none;
-		  overflow: hidden;
-		}
-
-		/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
-		@media screen and (max-width: 600px) {
-		  .col-20, .col-80, input[type=button] {
-		    width: 100%;
-		    margin-top: 0;
-		  }
-		  .wrapper .signature-pad {
-		  	width: 100%;
-		  }
-		}
-		</style>
+   		<script src="pdfWriter.js" defer></script>
+   		<script src="main.js" defer></script>
 	</head>
 
   <body>
+
   	<div class="container" style="text-align: center">
-  	<h2>DECLARAȚIE PE PROPRIE RĂSPUNDERE</h2>
+  		<h2>DECLARAȚIE PE PROPRIE RĂSPUNDERE</h2>
   	</div>
+
   	<div class="container">
   	<form id="frm1" class="form-inline">
+
   		<div class="row">
   			<div class="col-20">
 	      		<label for="nume">Nume</label>
@@ -222,6 +29,7 @@
 	      		<input type="text" name="nume" placeholder="Numele de familie">
 	      	</div>
    		</div>
+
    		<div class="row">
   			<div class="col-20">
 	      		<label for="prenume">Prenume</label>
@@ -230,6 +38,7 @@
 	      		<input type="text" name="prenume" placeholder="Prenume">
 	      	</div>
    		</div>
+
    		<div class="row">
   			<div class="col-20">
 	      		<label for="data">Data nașterii</label>
@@ -238,6 +47,7 @@
 	      		<input type="date" name="data" placeholder="luna/ziua/anul">
 	      	</div>
    		</div>
+
    		<div class="row">
   			<div class="col-20">
 	      		<label for="adresa">Adresa locuinței</label>
@@ -247,6 +57,7 @@
       			<p style="font-size: 15px;">Se va completa adresa locuinței în care persoana locuiește în fapt, indiferent dacă este identică sau nu cu cea menționată în actul de identitate</p>
 	      	</div>
    		</div>
+
    		<div class="row">
   			<div class="col-20">
 	      		<label for="deplasare">Locul / locurile deplasării</label>
@@ -256,43 +67,55 @@
       			<p style="font-size: 15px;">Se vor menționa locurile în care persoana se deplasează, în ordinea în care aceasta intenționează să-și desfășoare traseul</p>
 	      	</div>
    		</div>
+
+
       	<h3>Motivul deplasării</h3>
+
       	<label class="container_cb">1. interes profesional, inclusiv între locuință/gospodărie și locul/locurile de desfășurare a activității profesionale și înapoi
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
 		</label>
+
 		<label class="container_cb">2. asigurarea de bunuri care acoperă necesitățile de bază ale persoanelor și animalelor decompanie/domestice
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
 		</label>
+
 		<label class="container_cb">3. asistență medicală care nu poate fi amânată și nici realizată de la distanță
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
 		</label>
+
 		<label class="container_cb">4. motive justificate, precum îngrijirea/ însoțirea unui minor/copilului, asistența persoanelor vârstnice, bolnave sau cu dizabilități ori deces al unui membru de familie
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
 		</label>
+
 		<label class="container_cb">5. activitate fizică individuală (cu excluderea oricăror activități sportive de echipă/ colective)sau pentru nevoile animalelor de companie/domestice, în apropierea locuinței
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
 		</label>
+
 		<label class="container_cb">6. realizarea de activități agricole
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
 		</label>
+
 		<label class="container_cb">7. donarea de sânge, la centrele de transfuzie sanguină
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
 		</label>
+
 		<label class="container_cb">8. scopuri umanitare sau de voluntariat
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
 		</label>
+
 		<label class="container_cb">9. comercializarea de produse agroalimentare (în cazul producătorilor agricoli)
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
 		</label>
+
 		<label class="container_cb">10. asigurarea de bunuri necesare desfășurării activității profesionale
 		  <input type="checkbox">
 		  <span class="checkmark"></span>
@@ -300,6 +123,7 @@
 
       	<p style="font-size: 15px;">Se va bifa doar motivul/motivele deplasării dintre cele prevăzute în listă, nefiind permise deplasări realizate invocând alte motive decât cele prevăzute în Ordonanța Militară nr. 3/2020. 
       	</p>
+
       	<p style="font-size: 15px;">Subsemnatul cunosc prevederile art. 326 din Codul Penal cu privire la falsul în declarații și art. 352 din Codul Penal cu privire la zădărnicirea combaterii bolilor.
       	</p>
 
@@ -324,9 +148,15 @@
 	      	</div>
    		</div>
 
+   	<p style="font-size: 15px"><b>Persoanele care au împlinit vârsta de 65 de ani completează doar pentru motivele prevăzute în câmpurile 1-6,
+deplasarea fiind permisă zilnic doar în intervalul orar 11.00 – 13.00, iar în afara intervalului pentru motivele
+de la punctul 1 și punctul 6.
+	</b></p>
+
     <p style="font-size: 15px;">(Puteti salva documentul care se va deschide sau puteti face un screenshot)</p>
 	  <input type="button" id="getPdf" onclick="modifyPdf()" value="Descarcă declarația">
 	</form>
+
 	<button class="accordion">Este sigur sa folosesc acest website pentru a face declaratia?</button>
 	<div class="panel">
 	  <p>Da. Datele dumneavoastra nu sunt trimise nimanui, iar documentul se genereaza pe loc in browserul dumneavoastra.</p>
@@ -339,178 +169,12 @@
 
 	<button class="accordion">Imi va spune politia ceva daca prezint documentul generat aici?</button>
 	<div class="panel">
-	  <p>Nu. Documentul generat aici este exact acelasi ca cel publicat pe siteul <a href="https://stirioficiale.ro/storage/28MODEL%20Declaratie%20proprie%20raspundere%202503.pdf">stirioficiale.ro</a> si este completat in aceeasi maniera ca si cum ar fi completat in Adobe Acrobat.</p>
+	  <p>Nu. Documentul generat aici este exact acelasi ca cel publicat pe siteul <a href="https://stirioficiale.ro/storage/28MODEL%20Declaratie%20proprie%20raspundere%202503.pdf">stirioficiale.ro</a> si arata ca un document completat in Adobe Acrobat.</p>
 	</div>
-
+	
   	</div>
 
   </body>
-  <script>
-  	const {
-	  drawImage,
-	  drawLinesOfText,
-	  drawRectangle,
-	  drawText,
-	  PDFDocument,
-	  PDFName,
-	  PDFNumber,
-	  PDFString,
-	  PDFBool
-	} = PDFLib
-
-document.addEventListener('DOMContentLoaded', function onload(){
-	var today = new Date();
-	var dd = today.getDate();
-	var mm = today.getMonth()+1; 
-	var yyyy = today.getFullYear();
-	yyyy = parseInt(yyyy);
-	if (mm < 10) {
-		mm = "0" + mm;
-	}
-	if (dd < 10) {
-	  	dd = "0" + dd;
-	}
-	today = yyyy+'-'+mm+'-'+dd;
-
-	document.getElementById("data_curenta").value = today;
-	var fields = ["nume", "prenume", "data", "adresa", "deplasare"];
-	for (let i = 0; i < fields.length; ++i) {
-	  	let result = localStorage.getItem(fields[i]);
-		let current = document.getElementsByName(fields[i])[0];
-		if (result != null) {
-		  current.value = result;
-		}
-	}
-
-	document.getElementById("getPdf").addEventListener('click', saveText);
-
-	var acc = document.getElementsByClassName("accordion");
-
-	for (let i = 0; i < acc.length; i++) {
-	  acc[i].addEventListener("click", function() {
-	    this.classList.toggle("active");
-	    var panel = this.nextElementSibling;
-	    if (panel.style.display === "block") {
-	      panel.style.display = "none";
-	    } else {
-	      panel.style.display = "block";
-	    }
-	  });
-	}
-}, false);
-
-async function modifyPdf() {
-
-	var x = document.getElementById("frm1");
-
-	const getAcroForm = (pdfDoc) => {
-	  return pdfDoc.context.lookup(pdfDoc.catalog.get(PDFName.of('AcroForm')));
-	}
-
-	const getAcroFields = (pdfDoc) => {
-	  if (!pdfDoc.catalog.get(PDFName.of('AcroForm'))) return [];
-	  const acroForm = pdfDoc.context.lookup(pdfDoc.catalog.get(PDFName.of('AcroForm')));
-
-	  if (!acroForm.get(PDFName.of('Fields'))) return [];
-	  const acroFields = acroForm.context.lookup(acroForm.get(PDFName.of('Fields')));
-
-	  return acroFields.array.map(ref => acroForm.context.lookup(ref));
-	};
-
-	const findAcroFieldByName = (pdfDoc, name) => {
-	  const acroFields = getAcroFields(pdfDoc);
-	  return acroFields.find((acroField) => {
-	    const fieldName = acroField.get(PDFName.of('T'));
-	    return !!fieldName && fieldName.value === name;
-	  });
-	};
-
-	const logAcroFieldNames = (pdfDoc) => {
-	  const acroFields = getAcroFields(pdfDoc);
-	  acroFields.forEach((acroField) => {
-	    console.log(
-	      'Field Name:',
-	      acroField.get(PDFName.of('T')).toString(),
-	      'Field Value:',
-	      acroField.get(PDFName.of('V')),
-	      'All',
-	      acroField
-	    );
-	  });
-	};
-
-
-	const fillInField = (pdfDoc, fieldName, text) => {
-	  const toFillField = findAcroFieldByName(pdfDoc, fieldName);
-	  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
-	  toFillField.set(PDFName.of('V'), PDFString.of(text));
-	};
-
-	const fillInRadioButton = (pdfDoc, fieldName, alreadyFilledIn) => {
-	  var toFillField = findAcroFieldByName(pdfDoc, fieldName);
-	  const filledField = findAcroFieldByName(pdfDoc, alreadyFilledIn);
-	  if (!toFillField) throw new Error(`Missing AcroField: ${fieldName}`);
-	  if (!filledField) throw new Error(`Missing AcroField: ${alreadyFilledIn}`);
-	  pdfFields = ['AP', 'AS', 'DA', 'F', 'FT', 'MK', 'P', 'Subtype', 'Type', 'V']
-	  for(let i = 0; i < pdfFields.length; i++) {
-	  	toFillField.set(PDFName.of(pdfFields[i]), filledField.get(PDFName.of(pdfFields[i])));
-	  }
-	};
-
-	const main = async function () {
-	  const url = './declaratie-buna.pdf'
-	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer())
-
-	  // Load a PDFDocument from the existing PDF bytes
-	  const pdfDoc = await PDFDocument.load(existingPdfBytes)
-	  const acroForm = getAcroForm(pdfDoc);
-	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
-
-	  fillInRadioButton(pdfDoc, 'Check Box3', 'Check Box1');
-	  fillInField(pdfDoc, 'nume', x.elements[0].value);
-	  fillInField(pdfDoc, 'prenume', x.elements[1].value);
-	  logAcroFieldNames(pdfDoc);
-
-	  const pdfBytes = await pdfDoc.save();
-
-	  // Trigger the browser to download the PDF document
-	  download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
-	 }
-	main();	
-}
-	var canvas = document.getElementById('signature-pad');
-
-	// Adjust canvas coordinate space taking into account pixel ratio,
-	// to make it look crisp on mobile devices.
-	// This also causes canvas to be cleared.
-	function resizeCanvas() {
-	    // When zoomed out to less than 100%, for some very strange reason,
-	    // some browsers report devicePixelRatio as less than 1
-	    // and only part of the canvas is cleared then.
-	    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
-	    canvas.width = canvas.offsetWidth * ratio;
-	    canvas.height = canvas.offsetHeight * ratio;
-	    canvas.getContext("2d").scale(ratio, ratio);
-	}
-
-	window.onresize = resizeCanvas;
-	resizeCanvas();
-
-	var signaturePad = new SignaturePad(canvas, {
-	  backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
-	});
-
-	document.getElementById('clear').addEventListener('click', function () {
-	  signaturePad.clear();
-	});
-
-   function saveText(e) {
-   	var fields = ["nume", "prenume", "data", "adresa", "deplasare"];
-	for (let i = 0; i < fields.length; ++i) {
-		localStorage.setItem(fields[i], document.getElementsByName(fields[i])[0].value);
-	} 	
-   }
-</script>
 </html>
 
 <!--
