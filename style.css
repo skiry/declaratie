@@ -18,6 +18,15 @@ input[type=date], select, textarea {
   resize: vertical;
 }
 
+input[type=number], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  resize: vertical;
+}
+
+
 label:not(.container_cb) {
   padding: 12px 12px 12px 0;
   display: inline-block;
