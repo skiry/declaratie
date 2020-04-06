@@ -92,9 +92,9 @@ async function modifyPdf() {
 	  var sizes = [12.4, 12.4, 14, 19.6];
 
 	  for (let i = 0; i < fields.length; ++i) {
-		let value = document.getElementsByName(fields[i])[0].value;
-		if (i > 2) {
-			value = fields[i];
+		let value = fields[i];
+		if (i < 3) {
+			value = document.getElementsByName(fields[i])[0].value;
 		}
 		firstPage.drawText(value, {
 	    x: locations[i][0],
@@ -108,8 +108,9 @@ async function modifyPdf() {
 
 	  const pdfBytes = await pdfDoc.save();
 
+	  let numeFisier = "declaratie-proprie-raspundere-".concat(document.getElementsByName("prenume")[0].value).concat(".pdf");
 	  // Trigger the browser to download the PDF document
-	  download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+	  download(pdfBytes, numeFisier, "application/pdf");
 	 }
 
 	main();	
