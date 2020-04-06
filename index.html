@@ -1,99 +1,347 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<link rel="stylesheet" href="styles.css">
+		<meta name="description" content="Formular pentru generarea declaratiei">
+		<meta name="author" content="Farauanu Ionut">
+   		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="https://unpkg.com/pdf-lib@1.4.0"></script>
    		<script src="https://unpkg.com/downloadjs@1.4.7"></script>
-   		<style>
-   			input[type], select {
-			  width: 50%;
-			  padding: 12px 20px;
-			  margin: 8px 0;
-			  display: inline-block;
-			  border: 1px solid #ccc;
-			  border-radius: 4px;
-			  box-sizing: border-box;
-			}
+   		<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+		<style>
+		* {
+		  box-sizing: border-box;
+		}
 
-			div {
-			  margin-left: 20%;
-			  margin-right: 20%;
-			  border-radius: 5px;
-			  background-color: #f2f2f2;
-			  padding: 20px;
-			}
+		input[type=text], select, textarea {
+		  width: 100%;
+		  padding: 12px;
+		  border: 1px solid #ccc;
+		  border-radius: 4px;
+		  resize: vertical;
+		}
 
-			.form-inline {  
-			  display: flex;
-			  flex-flow: row wrap;
-			  align-items: center;
-			}
+		input[type=date], select, textarea {
+		  width: 100%;
+		  padding: 12px;
+		  border: 1px solid #ccc;
+		  border-radius: 4px;
+		  resize: vertical;
+		}
 
-			.form-inline label {
-			  margin: 5px 10px 5px 0;
-			}
+		label:not(.container_cb) {
+		  padding: 12px 12px 12px 0;
+		  display: inline-block;
+		}
 
-			.form-inline input {
-			  vertical-align: middle;
-			  margin: 5px 10px 5px 0;
-			  padding: 10px;
-			  background-color: #fff;
-			  border: 1px solid #ddd;
-			}
+		input[type=button] {
+		  background-color: #4CAF50;
+		  color: white;
+		  padding: 12px 20px;
+		  border: none;
+		  border-radius: 4px;
+		  cursor: pointer;
+		  float: right;
+		  width: 100%;
+		}
 
+		#clear {
+		  background-color: #3483eb;
+		  color: white;
+		  padding: 12px 20px;
+		  margin-top: 5px;
+		  border-radius: 4px;
+		  cursor: pointer;
+		  width: 400px;
+		}
 
-			input[type=button] {
-			  width: 100%;
-			  background-color: #4CAF50;
-			  color: white;
-			  padding: 14px 20px;
-			  margin: 8px 0;
-			  border: none;
-			  border-radius: 4px;
-			  cursor: pointer;
-			}
+		input[type=button]:hover {
+		  background-color: #45a049;
+		}
 
-			input[type=button]:hover {
-			  background-color: #45a049;
-			}
+		.container {
+		  border-radius: 5px;
+		  background-color: #f2f2f2;
+		  padding: 20px;
+		}
 
-			@media (max-width: 900000px) {
-			  .form-inline input {
-			    margin: 10px 0;
-			  }
-			  
-			  .form-inline {
-			    flex-direction: column;
-			    align-items: stretch;
-			  }
-			}
+		.col-20 {
+		  float: left;
+		  width: 20%;
+		  margin-top: 6px;
+		}
+
+		.col-80 {
+		  float: left;
+		  width: 80%;
+		  margin-top: 6px;
+		}
+
+		/* Clear floats after the columns */
+		.row:after {
+		  content: "";
+		  display: table;
+		  clear: both;
+		}
+
+		.container_cb {
+		  display: block;
+		  position: relative;
+		  padding-left: 35px;
+		  margin-bottom: 12px;
+		  cursor: pointer;
+		  font-size: 22px;
+		  -webkit-user-select: none;
+		  -moz-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		/* Hide the browser's default checkbox */
+		.container_cb input {
+		  position: absolute;
+		  opacity: 0;
+		  cursor: pointer;
+		  height: 0;
+		  width: 0;
+		}
+
+		/* Create a custom checkbox */
+		.checkmark {
+		  position: absolute;
+		  top: 0;
+		  left: 0;
+		  height: 25px;
+		  width: 25px;
+		  background-color: #ffffff;
+		}
+
+		/* On mouse-over, add a green background color */
+		.container_cb:hover input ~ .checkmark {
+		  background-color: #fcb335;
+		}
+
+		/* When the checkbox is checked, add a blue background */
+		.container_cb input:checked ~ .checkmark{
+		  background-color: #038738;
+		  color: #038738;
+		}
+
+		/* Create the checkmark/indicator (hidden when not checked) */
+		.checkmark:after {
+		  content: "";
+		  position: absolute;
+		  display: none;
+		}
+
+		/* Show the checkmark when checked */
+		.container_cb input:checked ~ .checkmark:after {
+		  display: block;
+		}
+
+		/* Style the checkmark/indicator */
+		.container_cb .checkmark:after {
+		  left: 9px;
+		  top: 5px;
+		  width: 5px;
+		  height: 10px;
+		  border: solid white;
+		  border-width: 0 3px 3px 0;
+		  -webkit-transform: rotate(45deg);
+		  -ms-transform: rotate(45deg);
+		  transform: rotate(45deg);
+		}
+
+		.wrapper {
+		  position: relative;
+		  width: 400px;
+		  height: 200px;
+		  -moz-user-select: none;
+		  -webkit-user-select: none;
+		  -ms-user-select: none;
+		  user-select: none;
+		}
+
+		.signature-pad {
+		  position: absolute;
+		  border-style: double;
+		  left: 0;
+		  top: 0;
+		  width:400px;
+		  height:200px;
+		  background-color: white;
+		}
+
+		.accordion {
+		  background-color: #eee;
+		  color: #444;
+		  cursor: pointer;
+		  padding: 18px;
+		  width: 100%;
+		  text-align: left;
+		  border: none;
+		  outline: none;
+		  transition: 0.4s;
+		}
+
+		/* Add a background color to the button if it is clicked on (add the .active class with JS), and when you move the mouse over it (hover) */
+		.active, .accordion:hover {
+		  background-color: #ccc;
+		}
+
+		/* Style the accordion panel. Note: hidden by default */
+		.panel {
+		  padding: 0 18px;
+		  background-color: white;
+		  display: none;
+		  overflow: hidden;
+		}
+
+		/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+		@media screen and (max-width: 600px) {
+		  .col-20, .col-80, input[type=button] {
+		    width: 100%;
+		    margin-top: 0;
+		  }
+		}
 		</style>
 	</head>
 
   <body>
-  	<div style="text-align: center">
+  	<div class="container" style="text-align: center">
   	<h2>DECLARAȚIE PE PROPRIE RĂSPUNDERE</h2>
   	</div>
-  	<div>
+  	<div class="container">
   	<form id="frm1" class="form-inline">
-      <label for="nume">Nume</label>
-      <input type="text" name="nume" placeholder="Numele de familie">
-   
-      <label for="prenume">Prenume</label>
-      <input type="text" name="prenume" placeholder="Prenume">
+  		<div class="row">
+  			<div class="col-20">
+	      		<label for="nume">Nume</label>
+	  		</div>
+	  		<div class="col-80">
+	      		<input type="text" name="nume" placeholder="Numele de familie">
+	      	</div>
+   		</div>
+   		<div class="row">
+  			<div class="col-20">
+	      		<label for="prenume">Prenume</label>
+	  		</div>
+	  		<div class="col-80">
+	      		<input type="text" name="prenume" placeholder="Prenume">
+	      	</div>
+   		</div>
+   		<div class="row">
+  			<div class="col-20">
+	      		<label for="data">Data nașterii</label>
+	  		</div>
+	  		<div class="col-80">
+	      		<input type="date" name="data" placeholder="luna/ziua/anul">
+	      	</div>
+   		</div>
+   		<div class="row">
+  			<div class="col-20">
+	      		<label for="adresa">Adresa locuinței</label>
+	  		</div>
+	  		<div class="col-80">
+	      		<input type="text" name="adresa" placeholder="Adresa unde locuiti acum">
+      			<p style="font-size: 15px;">Se va completa adresa locuinței în care persoana locuiește în fapt, indiferent dacă este identică sau nu cu cea menționată în actul de identitate</p>
+	      	</div>
+   		</div>
+   		<div class="row">
+  			<div class="col-20">
+	      		<label for="deplasare">Locul / locurile deplasării</label>
+	  		</div>
+	  		<div class="col-80">
+	      		<input type="text" name="deplasare" placeholder="Locurile in care doriți să mergeți">
+      			<p style="font-size: 15px;">Se vor menționa locurile în care persoana se deplasează, în ordinea în care aceasta intenționează să-și desfășoare traseul</p>
+	      	</div>
+   		</div>
+      	<h3>Motivul deplasării</h3>
+      	<label class="container_cb">1. interes profesional, inclusiv între locuință/gospodărie și locul/locurile de desfășurare a activității profesionale și înapoi
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
+		<label class="container_cb">2. asigurarea de bunuri care acoperă necesitățile de bază ale persoanelor și animalelor decompanie/domestice
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
+		<label class="container_cb">3. asistență medicală care nu poate fi amânată și nici realizată de la distanță
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
+		<label class="container_cb">4. motive justificate, precum îngrijirea/ însoțirea unui minor/copilului, asistența persoanelor vârstnice, bolnave sau cu dizabilități ori deces al unui membru de familie
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
+		<label class="container_cb">5. activitate fizică individuală (cu excluderea oricăror activități sportive de echipă/ colective)sau pentru nevoile animalelor de companie/domestice, în apropierea locuinței
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
+		<label class="container_cb">6. realizarea de activități agricole
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
+		<label class="container_cb">7. donarea de sânge, la centrele de transfuzie sanguină
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
+		<label class="container_cb">8. scopuri umanitare sau de voluntariat
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
+		<label class="container_cb">9. comercializarea de produse agroalimentare (în cazul producătorilor agricoli)
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
+		<label class="container_cb">10. asigurarea de bunuri necesare desfășurării activității profesionale
+		  <input type="checkbox">
+		  <span class="checkmark"></span>
+		</label>
 
-      <label for="data">Data nasterii</label>
-      <input type="date" name="data">
+      	<p style="font-size: 15px;">Se va bifa doar motivul/motivele deplasării dintre cele prevăzute în listă, nefiind permise deplasări realizate invocând alte motive decât cele prevăzute în Ordonanța Militară nr. 3/2020. 
+      	</p>
+      	<p style="font-size: 15px;">Subsemnatul cunosc prevederile art. 326 din Codul Penal cu privire la falsul în declarații și art. 352 din Codul Penal cu privire la zădărnicirea combaterii bolilor.
+      	</p>
 
-      <label for="adresa">Adresa</label>
-      <input type="text" name="adresa" placeholder="Adresa unde locuiti acum">
-      <p style="font-size: 15px; max-width: 50%">Se va completa adresa locuinței în care persoana locuiește în fapt, indiferent dacă este identică sau nu cu cea menționată în actul de identitate</p>
+      	<div class="row">
+  			<div class="col-20">
+	      		<label for="data_curenta">Data declarației</label>
+	  		</div>
+	  		<div class="col-80">
+	      		<input type="date" name="data_curenta" id="data_curenta">
+	      	</div>
+   		</div>
 
-	  <input type="button" onclick="modifyPdf()" value="Descarca declaratia">
+   		<div class="row">
+  			<div class="col-20">
+	      		<label for="semnatura">Semnătura</label>
+	  		</div>
+	  		<div class="col-80">
+	      		<div class="wrapper">
+				  <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+				</div>
+				 <button id="clear" type="button">Vreau să fac semnătura din nou</button>
+	      	</div>
+   		</div>
+
+    <p style="font-size: 15px;">(Puteti salva documentul care se va deschide sau puteti face un screenshot)</p>
+	  <input type="button" onclick="modifyPdf()" value="Descarcă declarația">
 	</form>
+	<button class="accordion">Este sigur sa folosesc acest website pentru a face declaratia?</button>
+	<div class="panel">
+	  <p>Da. Datele dumneavoastra nu sunt trimise nimanui, iar documentul se genereaza pe loc in browserul dumneavoastra.</p>
+	</div>
+
+	<button class="accordion">De ce imi apar datele introduse anterior?</button>
+	<div class="panel">
+	  <p>Datele sunt salvate doar in browserul dumneavoastra, nu le vede nimeni altcineva, pentru a nu va scrie din nou si din nou informatiile care nu se schimba (nume, prenume, data nasterii, etc.)</p>
+	</div>
+
+	<button class="accordion">Imi va spune politia ceva daca prezint documentul generat aici?</button>
+	<div class="panel">
+	  <p>Nu. Documentul generat aici este exact acelasi publicat pe siteul <a href="https://stirioficiale.ro/storage/28MODEL%20Declaratie%20proprie%20raspundere%202503.pdf">stirioficiale.ro</a> si este completat in aceeasi maniera ca si cum ar fi completat in Adobe Acrobat.</p>
+	</div>
+
   	</div>
 
-    <p class="small">(Se va salva documentul sau vi se va deschide intr-o pagina si va trebui sa il salvati dvs.)</p>
   </body>
   <script>
   	const {
@@ -107,6 +355,45 @@
 	  PDFString,
 	  PDFBool
 	} = PDFLib
+
+document.addEventListener('DOMContentLoaded', function onload(){
+	var today = new Date();
+	var dd = today.getDate();
+	var mm = today.getMonth()+1; 
+	var yyyy = today.getFullYear();
+	yyyy = parseInt(yyyy);
+	if (mm < 10) {
+		mm = "0" + mm;
+	}
+	if (dd < 10) {
+	  	dd = "0" + dd;
+	}
+	today = yyyy+'-'+mm+'-'+dd;
+
+	document.getElementById("data_curenta").value = today;
+	var fields = ["nume", "prenume", "data", "adresa", "deplasare"];
+	for (let i = 0; i < fields.length; ++i) {
+	  	let result = localStorage.getItem(fields[i]);
+		let current = document.getElementsByName(fields[i])[0];
+		if (result != null) {
+		  current.value = result;
+		}
+		current.addEventListener('keyup', saveText);
+	}
+	var acc = document.getElementsByClassName("accordion");
+
+	for (let i = 0; i < acc.length; i++) {
+	  acc[i].addEventListener("click", function() {
+	    this.classList.toggle("active");
+	    var panel = this.nextElementSibling;
+	    if (panel.style.display === "block") {
+	      panel.style.display = "none";
+	    } else {
+	      panel.style.display = "block";
+	    }
+	  });
+	}
+}, false);
 
 async function modifyPdf() {
 
@@ -187,17 +474,45 @@ async function modifyPdf() {
 	 }
 	main();	
 }
+	var canvas = document.getElementById('signature-pad');
+
+	// Adjust canvas coordinate space taking into account pixel ratio,
+	// to make it look crisp on mobile devices.
+	// This also causes canvas to be cleared.
+	function resizeCanvas() {
+	    // When zoomed out to less than 100%, for some very strange reason,
+	    // some browsers report devicePixelRatio as less than 1
+	    // and only part of the canvas is cleared then.
+	    var ratio =  Math.max(window.devicePixelRatio || 1, 1);
+	    canvas.width = canvas.offsetWidth * ratio;
+	    canvas.height = canvas.offsetHeight * ratio;
+	    canvas.getContext("2d").scale(ratio, ratio);
+	}
+
+	window.onresize = resizeCanvas;
+	resizeCanvas();
+
+	var signaturePad = new SignaturePad(canvas, {
+	  backgroundColor: 'rgb(255, 255, 255)' // necessary for saving image as JPEG; can be removed is only saving as PNG or SVG
+	});
+
+	document.getElementById('clear').addEventListener('click', function () {
+	  signaturePad.clear();
+	});
+
+   function saveText(e) {
+   	let field = e.srcElement.name;
+	let value = document.getElementsByName(field)[0].value;
+   	localStorage.setItem(field, value);
+   }
 </script>
 </html>
 
 <!--
 //TODO
--fix fillInField just with the value
 -draw on the pdf, along with writing the values, for portability -if one wants to change his file-
 -fix stuff with checkboxes - take care if i bifate 1 and 2, stuff...
--today's date default
--add semnatura
--support open existing file - updating the date in real time
+-save on local storage/delete data button-advertise people that all is saved on their phones
 
  var mycanvas = document.getElementById("signature-pad"); //get your canvas
 var image = mycanvas.toDataURL("image/png"); //Convert
@@ -208,5 +523,10 @@ document.getElementById("semnatura_hidden").value = image;
 doc.addImage(image, "PNG", 125, 170, 50, 25);
 
 thats how they do it
+
+
+helvetica - data 19.6
+deplasare - 14
+restul - 12.4
 --	>
 
