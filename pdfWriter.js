@@ -176,6 +176,9 @@ async function modifyPdf() {
 	      })
 
 	  const pdfBytes = await pdfDoc.save();
+	  console.log(pdfBytes);
+	  var pdfAsDataUri = "data:application/pdf;base64,"+pdfBytes;
+		window.open(pdfAsDataUri);
 	  let numeFisier = "declaratie-proprie-raspundere-".concat(document.getElementsByName("prenume")[0].value).concat(".pdf");
 	  // Trigger the browser to download the PDF document
 	  download(pdfBytes, numeFisier, "application/pdf");
@@ -188,16 +191,7 @@ async function modifyPdf() {
 /*
 //TODO
 -fix the bug with the checkboxes fillin
--add signature
-
- var mycanvas = document.getElementById("signature-pad"); //get your canvas
-var image = mycanvas.toDataURL("image/png"); //Convert
-document.getElementById("semnatura_hidden").src = image;
-image = image.replace('data:image/png;base64,', '');
-document.getElementById("semnatura_hidden").value = image;
-
-doc.addImage(image, "PNG", 125, 170, 50, 25);
-
+-schimba data
 
 */
 
