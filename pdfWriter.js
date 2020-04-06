@@ -167,9 +167,9 @@ async function modifyPdf() {
       const pngUrl = mycanvas.toDataURL("image/png"); //Convert
 	  const pngImageBytes = await fetch(pngUrl).then((res) => res.arrayBuffer())
 	  const pngImage = await pdfDoc.embedPng(pngImageBytes);
-	  const pngDims = pngImage.scale(0.5);
+	  const pngDims = pngImage.scale(0.25);
 	  firstPage.drawImage(pngImage, {
-	        x: 390,
+	        x: 380,
 	        y: 102,
 	        width: pngDims.width,
 	        height: pngDims.height,
