@@ -87,9 +87,9 @@ async function modifyPdf() {
 	  const acroForm = getAcroForm(pdfDoc);
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
-	  var fields = ["nume", "prenume", "deplasare", convertData("data_curenta")];
-	  var locations = [[164, 666], [341, 666], [60, 507], [161, 31]];
-	  var sizes = [12.4, 12.4, 14, 19.6];
+	  var fields = ["nume", "prenume", "deplasare", "adresa", convertData("data_curenta")];
+	  var locations = [[164, 666], [341, 666], [60, 507], [162, 614], [161, 121]];
+	  var sizes = [12.4, 12.4, 14, 12.4, 19.6];
 
 	  for (let i = 0; i < fields.length; ++i) {
 		let value = fields[i];
@@ -103,7 +103,57 @@ async function modifyPdf() {
 	    font: helveticaFont
 	  })
 	}
-	  fillInRadioButton(pdfDoc, 'Check Box3', 'Check Box1');
+	  let { an, luna, zi } = document.getElementsByName("data")[0].value.split('-');
+	  firstPage.drawText(zi, {
+	    x: 164,
+	    y: 641,
+	    size: 12.4,
+	    font: helveticaFont
+	  })
+
+	  firstPage.drawText(luna, {
+	    x: 206,
+	    y: 641,
+	    size: 12.4,
+	    font: helveticaFont
+	  })
+
+	  firstPage.drawText(an, {
+	    x: 250,
+	    y: 641,
+	    size: 12.4,
+	    font: helveticaFont
+	  })
+
+	  let checkboxes = document.getElementsByName("cb");
+	  let found = 0;
+	  for(let i = 2; i < 10; ++i) {
+	  	if ("checked" in checkboxes[i] == false) {
+	  		found = i;
+	  		fillInRadioButton(pdfDoc, 'Check Box'.concat(i.toString()), 'Check Box1');
+	  	}
+	  }
+	  if ("checked" in checkboxes[0]) {
+	  	// the first checkbox is not checked, deactivate it
+	  	if (found > 0) {
+	  		// there is another one we can copy from
+	  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box2');
+	  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box'.concat(found.toString()));
+	  	}
+	  	else {
+	  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
+	  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box3');
+	  	}
+
+	  	// if the second is, activate it with one of te above
+	  }
+	  else {
+	  	// the first one is checked, let it as it is
+	  	if ("checked" in checkboxes[1] == false) {
+	  		//if the second one is checked as well fill it in
+			fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
+	  	}
+	  }
 	  logAcroFieldNames(pdfDoc);
 
 	  const pdfBytes = await pdfDoc.save();
@@ -132,10 +182,6 @@ doc.addImage(image, "PNG", 125, 170, 50, 25);
 
 thats how they do it
 
-
-helvetica - data 19.6
-deplasare - 14
-restul - 12.4
 
 */
 
