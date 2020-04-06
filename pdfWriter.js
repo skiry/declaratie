@@ -136,21 +136,22 @@ async function modifyPdf() {
 	  console.log("passed the for")
 	  if (checkboxes[0].checked == false) {
 	  	// the first checkbox is not checked, deactivate it
-	  	if (found > 0) {
-	  		// there is another one we can copy from
-	  		console.log("da")
-	  		// deactivate the first one
-	  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box2');
-	  		console.log("Da2")
-	  		// activate the second one by copying one that is filled in
-	  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box'.concat((found + 1).toString()));
-	  		console.log("finished")
-	  	}
-	  	else {
-	  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
-	  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box3');
-	  	}
-
+	  	if (checkboxes[1].checked) {
+		  	if (found > 0) {
+		  		// there is another one we can copy from
+		  		console.log("da")
+		  		// deactivate the first one
+		  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box2');
+		  		console.log("Da2")
+		  		// activate the second one by copying one that is filled in
+		  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box'.concat((found + 1).toString()));
+		  		console.log("finished")
+		  	}
+		  	else {
+		  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
+		  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box3');
+		  	}
+		}
 	  	// if the second is, activate it with one of the above
 	  }
 	  else {
