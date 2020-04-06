@@ -83,7 +83,7 @@ async function modifyPdf() {
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
 	  var fields = ["nume", "prenume", "deplasare"];
-	  var locations = [[10, 30], [50, 100], [100, 150]];
+	  var locations = [[165, 666], [342, 666], [60, 507]];
 	  var sizes = [12.4, 12.4, 14];
 
 	  for (let i = 0; i < fields.length; ++i) {
