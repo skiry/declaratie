@@ -161,7 +161,7 @@ async function modifyPdf() {
 			fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
 	  	}
 	  }
-	  //logAcroFieldNames(pdfDoc);
+	  logAcroFieldNames(pdfDoc);
 
 	  const pdfBytes = await pdfDoc.save();
 
