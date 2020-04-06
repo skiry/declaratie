@@ -73,7 +73,7 @@ async function modifyPdf() {
     	let date = document.getElementsByName(str)[0].value.split('-');
     	return date[2].concat('.').concat(date[1]).concat('.').concat(date[0]);
     }
-    
+
 	const main = async function () {
 	  const url = './declaratie-buna.pdf';
 	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer());
@@ -93,10 +93,13 @@ async function modifyPdf() {
 
 	  for (let i = 0; i < fields.length; ++i) {
 		let value = document.getElementsByName(fields[i])[0].value;
+		if (i > 2) {
+			value = fields[i];
+		}
 		firstPage.drawText(value, {
 	    x: locations[i][0],
 	    y: locations[i][1],
-	    size: sizes[1],
+	    size: sizes[i],
 	    font: helveticaFont
 	  })
 	}
