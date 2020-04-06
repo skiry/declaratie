@@ -23,6 +23,22 @@ document.addEventListener('DOMContentLoaded', function onload(){
 		}
 	}
 
+	let zi = document.getElementsByName("zi")[0];
+	let luna = document.getElementsByName("luna")[0];
+	let an = document.getElementsByName("an")[0];
+
+	zi.onkeyup = function() {
+	    if (this.value.length == 2) {
+	        luna.focus();
+	    }
+	}
+
+	luna.onkeyup = function() {
+	    if (this.value.length == 2) {
+	        an.focus();
+	    }
+	}
+
 	document.getElementById("getPdf").addEventListener('click', saveText);
 
 	var acc = document.getElementsByClassName("accordion");
