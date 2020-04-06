@@ -103,22 +103,24 @@ async function modifyPdf() {
 	    font: helveticaFont
 	  })
 	}
-	  let birthdate = document.getElementsByName("data")[0].value.split('-');
-	  firstPage.drawText(birthdate[2], {
+	  let zi = document.getElementsByName("zi")[0].value;
+	  firstPage.drawText(zi, {
 	    x: 164,
 	    y: 641,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
 
-	  firstPage.drawText(birthdate[1], {
+	  let luna = document.getElementsByName("luna")[0].value;
+	  firstPage.drawText(luna, {
 	    x: 206,
 	    y: 641,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
 
-	  firstPage.drawText(birthdate[0], {
+	  let an = document.getElementsByName("an")[0].value;
+	  firstPage.drawText(an, {
 	    x: 248,
 	    y: 641,
 	    size: 12.4,
@@ -133,7 +135,7 @@ async function modifyPdf() {
 	  		fillInRadioButton(pdfDoc, 'Check Box'.concat((i + 1).toString()), 'Check Box1');
 	  	}
 	  }
-	  console.log("passed the for")
+
 	  if (checkboxes[0].checked == false) {
 	  	// the first checkbox is not checked, deactivate it
 	  	if (checkboxes[1].checked) {
@@ -197,11 +199,3 @@ async function modifyPdf() {
 
 	main();	
 }
-	
-
-/*
-//TODO
--schimba data nasterii input
--review intrebari-frumos
-*/
-

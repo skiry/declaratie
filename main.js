@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function onload(){
 	today = yyyy+'-'+mm+'-'+dd;
 
 	document.getElementById("data_curenta").value = today;
-	var fields = ["nume", "prenume", "data", "adresa", "deplasare"];
+	var fields = ["nume", "prenume", "zi", "luna", "an", "adresa", "deplasare"];
 	for (let i = 0; i < fields.length; ++i) {
 	  	let result = localStorage.getItem(fields[i]);
 		let current = document.getElementsByName(fields[i])[0];
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', function onload(){
 }, false);
 
 function saveText(e) {
-	var fields = ["nume", "prenume", "data", "adresa", "deplasare"];
+	var fields = ["nume", "prenume", "zi", "luna", "an", "adresa", "deplasare"];
 	for (let i = 0; i < fields.length; ++i) {
 		localStorage.setItem(fields[i], document.getElementsByName(fields[i])[0].value);
 	} 	
