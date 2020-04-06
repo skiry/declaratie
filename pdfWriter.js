@@ -167,7 +167,13 @@ async function modifyPdf() {
       const pngUrl = mycanvas.toDataURL("image/png"); //Convert
 	  const pngImageBytes = await fetch(pngUrl).then((res) => res.arrayBuffer())
 	  const pngImage = await pdfDoc.embedPng(pngImageBytes);
-	  const pngDims = pngImage.scale(0.25);
+	  let toScale = 0.25;
+	  console.log(screen.width)
+	  if (screen.width < 600){
+	  	toScale = 0.125
+	  }
+	  console.log(toScale)
+	  const pngDims = pngImage.scale(toScale);
 	  firstPage.drawImage(pngImage, {
 	        x: 380,
 	        y: 102,
@@ -177,8 +183,10 @@ async function modifyPdf() {
 
 	  const pdfBytes = await pdfDoc.save();
 	  console.log(pdfBytes);
-	  var pdfAsDataUri = "data:application/pdf;base64,"+pdfBytes;
-		window.open(pdfAsDataUri);
+	  const blob = new Blob([pdfBytes], {type: 'application/pdf'});
+		const blobURL = URL.createObjectURL(blob);
+		window.open(blobURL)
+		if 
 	  let numeFisier = "declaratie-proprie-raspundere-".concat(document.getElementsByName("prenume")[0].value).concat(".pdf");
 	  // Trigger the browser to download the PDF document
 	  download(pdfBytes, numeFisier, "application/pdf");
