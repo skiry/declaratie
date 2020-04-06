@@ -103,22 +103,22 @@ async function modifyPdf() {
 	    font: helveticaFont
 	  })
 	}
-	  let { an, luna, zi } = document.getElementsByName("data")[0].value.split('-');
-	  firstPage.drawText(zi, {
+	  let birthdate = document.getElementsByName("data")[0].value.split('-');
+	  firstPage.drawText(birthdate[2], {
 	    x: 164,
 	    y: 641,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
 
-	  firstPage.drawText(luna, {
+	  firstPage.drawText(birthdate[1], {
 	    x: 206,
 	    y: 641,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
 
-	  firstPage.drawText(an, {
+	  firstPage.drawText(birthdate[0], {
 	    x: 250,
 	    y: 641,
 	    size: 12.4,
@@ -137,8 +137,11 @@ async function modifyPdf() {
 	  	// the first checkbox is not checked, deactivate it
 	  	if (found > 0) {
 	  		// there is another one we can copy from
+
+	  		// deactivate the first one
 	  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box2');
-	  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box'.concat(found.toString()));
+	  		// activate the second one by copying one that is filled in
+	  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box'.concat((found + 1).toString()));
 	  	}
 	  	else {
 	  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
