@@ -188,7 +188,11 @@ async function modifyPdf() {
 	      })
 
 	  const pdfBytes = await pdfDoc.save();
-
+// click on "Show PDF" buuton
+document.querySelector("#show-pdf-button").addEventListener('click', function() {
+    this.style.display = 'none';
+    showPDF(pdfBytes);
+});
 	  //const blob = new Blob([pdfBytes], {type: 'application/pdf'});
 		//const blobURL = URL.createObjectURL(blob);
 		//window.open(blobURL)

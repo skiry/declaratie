@@ -8,6 +8,8 @@
 		<script src="https://unpkg.com/pdf-lib@1.4.0"></script>
    		<script src="https://unpkg.com/downloadjs@1.4.7"></script>
    		<script src="https://cdn.jsdelivr.net/npm/signature_pad@2.3.2/dist/signature_pad.min.js"></script>
+   		<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.2.228/pdf.min.js"></script>
+   		<script src="print_pdf.js"></script>
    		<script src="pdfWriter.js" defer></script>
    		<script src="main.js" defer></script>
 	</head>
@@ -181,6 +183,14 @@ de la punctul 1 și punctul 6.
 	</div>
 
   	</div>
+  	<button id="show-pdf-button">Show PDF</button> 
+
+<div id="pdf-main-container">
+	<div id="pdf-loader">Loading document ...</div>
+	<div id="pdf-contents">
+		<canvas id="pdf-canvas" width="400"></canvas>
+	</div>
+</div>
 
   </body>
 </html>
