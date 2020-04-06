@@ -186,7 +186,6 @@ async function modifyPdf() {
 	  const blob = new Blob([pdfBytes], {type: 'application/pdf'});
 		const blobURL = URL.createObjectURL(blob);
 		window.open(blobURL)
-		if 
 	  let numeFisier = "declaratie-proprie-raspundere-".concat(document.getElementsByName("prenume")[0].value).concat(".pdf");
 	  // Trigger the browser to download the PDF document
 	  download(pdfBytes, numeFisier, "application/pdf");
