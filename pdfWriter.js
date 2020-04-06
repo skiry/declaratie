@@ -128,12 +128,12 @@ async function modifyPdf() {
 	  let checkboxes = document.getElementsByName("cb");
 	  let found = 0;
 	  for(let i = 2; i < 10; ++i) {
-	  	if ("checked" in checkboxes[i] == false) {
+	  	if (checkboxes[i].checked) {
 	  		found = i;
 	  		fillInRadioButton(pdfDoc, 'Check Box'.concat(i.toString()), 'Check Box1');
 	  	}
 	  }
-	  if ("checked" in checkboxes[0]) {
+	  if (checkboxes[0].checked == false) {
 	  	// the first checkbox is not checked, deactivate it
 	  	if (found > 0) {
 	  		// there is another one we can copy from
@@ -152,7 +152,7 @@ async function modifyPdf() {
 	  }
 	  else {
 	  	// the first one is checked, let it as it is
-	  	if ("checked" in checkboxes[1] == false) {
+	  	if (checkboxes[1].checked) {
 	  		//if the second one is checked as well fill it in
 			fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
 	  	}
