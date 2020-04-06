@@ -163,8 +163,19 @@ async function modifyPdf() {
 	  }
 	  logAcroFieldNames(pdfDoc);
 
-	  const pdfBytes = await pdfDoc.save();
+	  const mycanvas = document.getElementById("signature-pad"); //get your canvas
+      const pngUrl = mycanvas.toDataURL("image/png"); //Convert
+	  const pngImageBytes = await fetch(pngUrl).then((res) => res.arrayBuffer())
+	  const pngImage = await pdfDoc.embedPng(pngImageBytes);
+	  const pngDims = pngImage.scale(0.5);
+	  page.drawImage(pngImage, {
+	        x: 390,
+	        y: 102,
+	        width: pngDims.width,
+	        height: pngDims.height,
+	      })
 
+	  const pdfBytes = await pdfDoc.save();
 	  let numeFisier = "declaratie-proprie-raspundere-".concat(document.getElementsByName("prenume")[0].value).concat(".pdf");
 	  // Trigger the browser to download the PDF document
 	  download(pdfBytes, numeFisier, "application/pdf");
@@ -176,6 +187,8 @@ async function modifyPdf() {
 
 /*
 //TODO
+-fix the bug with the checkboxes fillin
+-add signature
 
  var mycanvas = document.getElementById("signature-pad"); //get your canvas
 var image = mycanvas.toDataURL("image/png"); //Convert

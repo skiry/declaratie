@@ -35,7 +35,7 @@ document.addEventListener('DOMContentLoaded', function onload(){
 	      panel.style.display = "none";
 	    } else {
 	      panel.style.display = "block";
-	    }
+	    }      
 	  });
 	}
 }, false);
