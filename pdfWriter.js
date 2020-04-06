@@ -3,6 +3,7 @@ const {
 	  drawLinesOfText,
 	  drawRectangle,
 	  drawText,
+	  StandardFonts,
 	  PDFDocument,
 	  PDFName,
 	  PDFNumber,
