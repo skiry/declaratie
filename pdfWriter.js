@@ -93,7 +93,7 @@ async function modifyPdf() {
 
 	  for (let i = 0; i < fields.length; ++i) {
 		let value = fields[i];
-		if (i < 3) {
+		if (i < 4) {
 			value = document.getElementsByName(fields[i])[0].value;
 		}
 		firstPage.drawText(value, {
@@ -119,7 +119,7 @@ async function modifyPdf() {
 	  })
 
 	  firstPage.drawText(birthdate[0], {
-	    x: 250,
+	    x: 248,
 	    y: 641,
 	    size: 12.4,
 	    font: helveticaFont
@@ -130,25 +130,28 @@ async function modifyPdf() {
 	  for(let i = 2; i < 10; ++i) {
 	  	if (checkboxes[i].checked) {
 	  		found = i;
-	  		fillInRadioButton(pdfDoc, 'Check Box'.concat(i.toString()), 'Check Box1');
+	  		fillInRadioButton(pdfDoc, 'Check Box'.concat((i + 1).toString()), 'Check Box1');
 	  	}
 	  }
+	  console.log("passed the for")
 	  if (checkboxes[0].checked == false) {
 	  	// the first checkbox is not checked, deactivate it
 	  	if (found > 0) {
 	  		// there is another one we can copy from
-
+	  		console.log("da")
 	  		// deactivate the first one
 	  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box2');
+	  		console.log("Da2")
 	  		// activate the second one by copying one that is filled in
 	  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box'.concat((found + 1).toString()));
+	  		console.log("finished")
 	  	}
 	  	else {
 	  		fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
 	  		fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box3');
 	  	}
 
-	  	// if the second is, activate it with one of te above
+	  	// if the second is, activate it with one of the above
 	  }
 	  else {
 	  	// the first one is checked, let it as it is
@@ -157,7 +160,7 @@ async function modifyPdf() {
 			fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
 	  	}
 	  }
-	  logAcroFieldNames(pdfDoc);
+	  //logAcroFieldNames(pdfDoc);
 
 	  const pdfBytes = await pdfDoc.save();
 
@@ -172,8 +175,6 @@ async function modifyPdf() {
 
 /*
 //TODO
--draw on the pdf, along with writing the values, for portability -if one wants to change his file-
--fix stuff with checkboxes - take care if i bifate 1 and 2, stuff...
 
  var mycanvas = document.getElementById("signature-pad"); //get your canvas
 var image = mycanvas.toDataURL("image/png"); //Convert
@@ -182,8 +183,6 @@ image = image.replace('data:image/png;base64,', '');
 document.getElementById("semnatura_hidden").value = image;
 
 doc.addImage(image, "PNG", 125, 170, 50, 25);
-
-thats how they do it
 
 
 */
