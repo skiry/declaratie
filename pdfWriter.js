@@ -152,7 +152,10 @@ async function modifyPdf() {
 
 		  	}
 		}
-	  	// if the second is, activate it with one of the above
+		else {
+				fillInRadioButton(pdfDoc, 'Check Box1', 'Check Box2');
+		  	 	findAcroFieldByName(pdfDoc, 'Check Box1').set(PDFName.of('V'), PDFString.of('No'));
+		}
 	  }
 	  else {
 	  	// the first one is checked, let it as it is
@@ -161,18 +164,18 @@ async function modifyPdf() {
 			fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
 	  	}
 	  }
-	  logAcroFieldNames(pdfDoc);
+	  //logAcroFieldNames(pdfDoc);
 
 	  const mycanvas = document.getElementById("signature-pad"); //get your canvas
       const pngUrl = mycanvas.toDataURL("image/png"); //Convert
 	  const pngImageBytes = await fetch(pngUrl).then((res) => res.arrayBuffer())
 	  const pngImage = await pdfDoc.embedPng(pngImageBytes);
 	  let toScale = 0.25;
-	  console.log(screen.width)
+
 	  if (screen.width < 600){
 	  	toScale = 0.125
 	  }
-	  console.log(toScale)
+
 	  const pngDims = pngImage.scale(toScale);
 	  firstPage.drawImage(pngImage, {
 	        x: 380,
@@ -183,7 +186,6 @@ async function modifyPdf() {
 
 	  const pdfBytes = await pdfDoc.save();
 
-	  console.log(pdfBytes);
 	  const blob = new Blob([pdfBytes], {type: 'application/pdf'});
 		const blobURL = URL.createObjectURL(blob);
 		window.open(blobURL)
@@ -199,7 +201,6 @@ async function modifyPdf() {
 
 /*
 //TODO
--fix the bug with the checkboxes fillin
 -schimba data nasterii input
 -review intrebari-frumos
 */
