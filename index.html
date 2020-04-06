@@ -161,7 +161,7 @@
 		  user-select: none;
 		}
 
-		.signature-pad {
+		.signature-pad canvas{
 		  position: absolute;
 		  border-style: double;
 		  left: 0;
@@ -202,7 +202,7 @@
 		    width: 100%;
 		    margin-top: 0;
 		  }
-		  .wrapper .signature-pad {
+		  .wrapper .signature-pad canvas{
 		  	width: 100%;
 		  }
 		}
@@ -319,7 +319,7 @@
 	  		</div>
 	  		<div class="col-80">
 	      		<div class="wrapper">
-				  <canvas id="signature-pad" class="signature-pad" width=400 height=200></canvas>
+				  <canvas id="signature-pad" class="signature-pad" height=200></canvas>
 				</div>
 				 <button id="clear" type="button">Vreau să fac semnătura din nou</button>
 	      	</div>
@@ -515,7 +515,6 @@ async function modifyPdf() {
 //TODO
 -draw on the pdf, along with writing the values, for portability -if one wants to change his file-
 -fix stuff with checkboxes - take care if i bifate 1 and 2, stuff...
--save on local storage/delete data button-advertise people that all is saved on their phones
 
  var mycanvas = document.getElementById("signature-pad"); //get your canvas
 var image = mycanvas.toDataURL("image/png"); //Convert
