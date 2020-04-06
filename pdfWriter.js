@@ -69,6 +69,11 @@ async function modifyPdf() {
 	  }
 	};
 
+    function convertData(str) {
+    	let date = document.getElementsByName(str)[0].value.split('-');
+    	return date[2].concat('.').concat(date[1]).concat('.').concat(date[0]);
+    }
+    
 	const main = async function () {
 	  const url = './declaratie-buna.pdf';
 	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer());
@@ -82,9 +87,9 @@ async function modifyPdf() {
 	  const acroForm = getAcroForm(pdfDoc);
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
-	  var fields = ["nume", "prenume", "deplasare"];
-	  var locations = [[165, 666], [342, 666], [60, 507]];
-	  var sizes = [12.4, 12.4, 14];
+	  var fields = ["nume", "prenume", "deplasare", convertData("data_curenta")];
+	  var locations = [[164, 666], [341, 666], [60, 507], [161, 31]];
+	  var sizes = [12.4, 12.4, 14, 19.6];
 
 	  for (let i = 0; i < fields.length; ++i) {
 		let value = document.getElementsByName(fields[i])[0].value;
