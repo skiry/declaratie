@@ -168,15 +168,15 @@ async function modifyPdf() {
 			    font: helveticaFont
 			})
 	  	}
-	  	else {
-	  		firstPage.drawText(scoate_diacritice(cuvinteAdresa.slice(0, cuvinteAdresa.length).join(' ')), {
-			    x: 162,
-			    y: 614,
-			    size: 12.4,
-			    font: helveticaFont
-			})
-	  	}
 	  }
+  	else {
+  		firstPage.drawText(scoate_diacritice(adresa), {
+		    x: 162,
+		    y: 614,
+		    size: 12.4,
+		    font: helveticaFont
+		})
+  	}
 
 	  let zi = document.getElementsByName("zi")[0].value;
 	  firstPage.drawText(zi, {
