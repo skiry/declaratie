@@ -169,7 +169,7 @@ async function modifyPdf() {
 			})
 	  	}
 	  	else {
-	  		firstPage.drawText(scoate_diacritice(cuvinteAdresa.join(' ')), {
+	  		firstPage.drawText(scoate_diacritice(cuvinteAdresa.splice(0, cuvinteAdresa.length).join(' ')), {
 			    x: 162,
 			    y: 614,
 			    size: 12.4,
