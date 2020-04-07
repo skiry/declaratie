@@ -87,6 +87,24 @@ async function modifyPdf() {
 	  const acroForm = getAcroForm(pdfDoc);
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
+	  function scoate_diacritice(cuvant) {
+	  	var diacritice = [['Ă', 'A'], ['ă', 'a'], ['Â', 'A'], ['â', 'a'], ['Î', 'î']]
+	  	var areDiacritice = true;
+	  	var pozitie = 0;
+	  	while (areDiacritice && pozitie < 5) {
+	  		areDiacritice = false;
+	  		let diacritica = diacritice[pozitie][0];
+
+	  		while (cuvant.includes(diacritica)) {
+	  			cuvant = cuvant.replace(diacritica, diacritice[pozitie][1]);
+	  			areDiacritice = true;
+	  		}
+
+ 			pozitie += 1;
+	  	}
+	  	return cuvant;
+	  } 
+
 	  var fields = ["nume", "prenume", "deplasare", "adresa", convertData("data_curenta")];
 	  var locations = [[164, 666], [341, 666], [60, 507], [162, 614], [161, 121]];
 	  var sizes = [12.4, 12.4, 14, 12.4, 19.6];
@@ -95,7 +113,9 @@ async function modifyPdf() {
 		let value = fields[i];
 		if (i < 4) {
 			value = document.getElementsByName(fields[i])[0].value;
+			value = scoate_diacritice(value);
 		}
+
 		firstPage.drawText(value, {
 	    x: locations[i][0],
 	    y: locations[i][1],
@@ -201,6 +221,4 @@ async function modifyPdf() {
 	main();	
 }
 
-//de ce la miscarea paginii se restarteaza semnatura? same in storage
-//diacritice
 //pdf as img
