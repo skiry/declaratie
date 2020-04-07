@@ -26,6 +26,7 @@ document.addEventListener('DOMContentLoaded', function onload(){
 	let zi = document.getElementsByName("zi")[0];
 	let luna = document.getElementsByName("luna")[0];
 	let an = document.getElementsByName("an")[0];
+	let adresa = document.getElementsByName("adresa")[0];
 
 	zi.onkeyup = function() {
 	    if (this.value.length == 2) {
@@ -36,6 +37,12 @@ document.addEventListener('DOMContentLoaded', function onload(){
 	luna.onkeyup = function() {
 	    if (this.value.length == 2) {
 	        an.focus();
+	    }
+	}
+
+	an.onkeyup = function() {
+	    if (this.value.length == 4) {
+	        adresa.focus();
 	    }
 	}
 

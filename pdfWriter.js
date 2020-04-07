@@ -204,3 +204,7 @@ document.querySelector("#show-pdf-button").addEventListener('click', function() 
 
 	main();	
 }
+
+//buton refresh deasupra?
+//diacritice
+//pdf as img
