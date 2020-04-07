@@ -97,7 +97,7 @@ async function modifyPdf() {
 	  	];
 	  	for (let pozitie = 0; pozitie < diacritice.length; ++pozitie) {
 	  		let diacritica = diacritice[pozitie][0];
-	  		while (cuvant.	des(diacritica)) {
+	  		while (cuvant.includes(diacritica)) {
 	  			cuvant = cuvant.replace(diacritica, diacritice[pozitie][1]);
 	  		}
 	  	}
