@@ -88,7 +88,13 @@ async function modifyPdf() {
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
 	  function scoate_diacritice(cuvant) {
-	  	var diacritice = [['Ă', 'A'], ['ă', 'a'], ['Â', 'A'], ['â', 'a'], ['Î', 'I'], ['î', 'i'], ['Ș', 'S'], ['ș', 's'], ['Ț', 'T'], ['ț', 't']];
+	  	var diacritice = [
+	  	['Ă', 'A'], ['ă', 'a'], 
+	  	['Â', 'A'], ['â', 'a'], 
+	  	['Î', 'I'], ['î', 'i'], 
+	  	['Ș', 'S'], ['ș', 's'], 
+	  	['Ț', 'T'], ['ț', 't']
+	  	];
 	  	for (let pozitie = 0; pozitie < diacritice.length; ++pozitie) {
 	  		let diacritica = diacritice[pozitie][0];
 	  		while (cuvant.includes(diacritica)) {
