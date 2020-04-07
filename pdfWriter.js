@@ -88,22 +88,15 @@ async function modifyPdf() {
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
 	  function scoate_diacritice(cuvant) {
-	  	var diacritice = [['Ă', 'A'], ['ă', 'a'], ['Â', 'A'], ['â', 'a'], ['Î', 'î']]
-	  	var areDiacritice = true;
-	  	var pozitie = 0;
-	  	while (areDiacritice && pozitie < 5) {
-	  		areDiacritice = false;
+	  	var diacritice = [['Ă', 'A'], ['ă', 'a'], ['Â', 'A'], ['â', 'a'], ['Î', 'I'], ['î', 'i'], ['Ș', 'S'], ['ș', 's'], ['Ț', 'T'], ['ț', 't']];
+	  	for (let pozitie = 0; pozitie < diacritice.length; ++pozitie) {
 	  		let diacritica = diacritice[pozitie][0];
-
 	  		while (cuvant.includes(diacritica)) {
 	  			cuvant = cuvant.replace(diacritica, diacritice[pozitie][1]);
-	  			areDiacritice = true;
 	  		}
-
- 			pozitie += 1;
 	  	}
 	  	return cuvant;
-	  } 
+	  }
 
 	  var fields = ["nume", "prenume", "deplasare", "adresa", convertData("data_curenta")];
 	  var locations = [[164, 666], [341, 666], [60, 507], [162, 614], [161, 121]];
