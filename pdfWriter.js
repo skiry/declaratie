@@ -75,7 +75,7 @@ async function modifyPdf() {
     }
 
 	const main = async function () {
-	  const url = './declaratie-buna.pdf';
+	  const url = './declaratie-alerta.pdf';
 	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer());
 
 	  // Load a PDFDocument from the existing PDF bytes
@@ -105,7 +105,7 @@ async function modifyPdf() {
 	  }
 
 	  var fields = ["nume", "prenume", "deplasare", convertData("data_curenta")];
-	  var locations = [[164, 666], [341, 666], [60, 507], [161, 121]];
+	  var locations = [[164, 666], [341, 666], [60, 507], [161, 146]];
 	  var sizes = [12.4, 12.4, 14, 19.6];
 
 	  for (let i = 0; i < fields.length; ++i) {
@@ -204,7 +204,7 @@ async function modifyPdf() {
 
 	  let checkboxes = document.getElementsByName("cb");
 	  let found = 0;
-	  for(let i = 2; i < 10; ++i) {
+	  for(let i = 2; i < 11; ++i) {
 	  	if (checkboxes[i].checked) {
 	  		found = i;
 	  		fillInRadioButton(pdfDoc, 'Check Box'.concat((i + 1).toString()), 'Check Box1');
@@ -256,7 +256,7 @@ async function modifyPdf() {
 	  const pngDims = pngImage.scale(toScale);
 	  firstPage.drawImage(pngImage, {
 	        x: 380,
-	        y: 102,
+	        y: 127,
 	        width: pngDims.width,
 	        height: pngDims.height,
 	      })
@@ -274,5 +274,3 @@ async function modifyPdf() {
 
 	main();	
 }
-
-//pdf as img
