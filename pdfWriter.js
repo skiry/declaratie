@@ -105,7 +105,7 @@ async function modifyPdf() {
 	  }
 
 	  var fields = ["nume", "prenume", "deplasare", convertData("data_curenta")];
-	  var locations = [[164, 666], [341, 666], [60, 507], [161, 74]];
+	  var locations = [[164, 666], [341, 666], [60, 507], [161, 83]];
 	  var sizes = [12.4, 12.4, 14, 19.6];
 
 	  for (let i = 0; i < fields.length; ++i) {
