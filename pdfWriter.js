@@ -105,7 +105,7 @@ async function modifyPdf() {
 	  }
 
 	  var fields = ["nume", "prenume", "deplasare", convertData("data_curenta")];
-	  var locations = [[164, 666], [341, 666], [60, 507], [161, 94]];
+	  var locations = [[164, 666], [341, 666], [60, 507], [161, 74]];
 	  var sizes = [12.4, 12.4, 14, 19.6];
 
 	  for (let i = 0; i < fields.length; ++i) {
@@ -256,7 +256,7 @@ async function modifyPdf() {
 	  const pngDims = pngImage.scale(toScale);
 	  firstPage.drawImage(pngImage, {
 	        x: 380,
-	        y: 75,
+	        y: 60,
 	        width: pngDims.width,
 	        height: pngDims.height,
 	      })
