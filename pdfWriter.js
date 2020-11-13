@@ -107,8 +107,8 @@ async function modifyPdf() {
 
 	  var fields = ["nume", "domiciliu", "resedinta", "localitate", 
 	  				"organizatie", "sediu", convertData("data_curenta")];
-	  var locations = [[164, 675], [164, 641], [164, 607], 
-	  				   [464, 541], [140, 400], [120, 360],
+	  var locations = [[169, 666], [169, 642], [169, 625], 
+	  				   [324, 586], [262, 500], [182, 485],
 	  				   [110, 130]];
 	  var sizes = [12.4, 12.4, 14, 14,
 	  			   14, 14, 19.6];
@@ -160,16 +160,16 @@ async function modifyPdf() {
 		if (limitSindex < cuvinteAdresa.length) {
 			adr = cuvinteAdresa.slice(0, limitSindex + 1);
 			firstPage.drawText(scoate_diacritice(adr.join(' ')), {
-		    x: 162,
-		    y: 300,
+		    x: 140,
+		    y: 405,
 		    size: 12.4,
 		    font: helveticaFont
 		})
 
 			adr = cuvinteAdresa.slice(limitSindex + 1, cuvinteAdresa.length);
 			firstPage.drawText(scoate_diacritice(adr.join(' ')), {
-		    x: 162,
-		    y: 270,
+		    x: 140,
+		    y: 390,
 		    size: 12.4,
 		    font: helveticaFont
 		})
@@ -177,8 +177,8 @@ async function modifyPdf() {
 	}
 	else {
 		firstPage.drawText(scoate_diacritice(adresa), {
-	    x: 162,
-	    y: 300,
+	    x: 140,
+	    y: 405,
 	    size: 12.4,
 	    font: helveticaFont
 	})
@@ -186,24 +186,24 @@ async function modifyPdf() {
 
 	  let zi = document.getElementsByName("zi")[0].value;
 	  firstPage.drawText(zi, {
-	    x: 164,
-	    y: 561,
+	    x: 169,
+	    y: 586,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
 
 	  let luna = document.getElementsByName("luna")[0].value;
 	  firstPage.drawText(luna, {
-	    x: 206,
-	    y: 571,
+	    x: 211,
+	    y: 586,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
 
 	  let an = document.getElementsByName("an")[0].value;
 	  firstPage.drawText(an, {
-	    x: 248,
-	    y: 581,
+	    x: 253,
+	    y: 586,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
@@ -261,7 +261,7 @@ async function modifyPdf() {
 	  const pngDims = pngImage.scale(toScale);
 	  firstPage.drawImage(pngImage, {
 	        x: 380,
-	        y: 90,
+	        y: 100,
 	        width: pngDims.width,
 	        height: pngDims.height,
 	      })
