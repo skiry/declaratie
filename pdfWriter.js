@@ -107,9 +107,9 @@ async function modifyPdf() {
 
 	  var fields = ["nume", "domiciliu", "resedinta", "localitate", 
 	  				"organizatie", "sediu", convertData("data_curenta")];
-	  var locations = [[169, 666], [169, 642], [169, 625], 
-	  				   [324, 586], [262, 500], [182, 485],
-	  				   [110, 130]];
+	  var locations = [[175, 666], [175, 640], [175, 600], 
+	  				   [470, 590], [263, 450], [167, 435],
+	  				   [110, 127]];
 	  var sizes = [12.4, 12.4, 14, 14,
 	  			   14, 14, 19.6];
 
@@ -130,10 +130,10 @@ async function modifyPdf() {
 
 
  	let adresa = document.getElementsByName("punctLucru")[0].value;
-	let maxLength = 56;
+	let maxLength = 75;
 	let cuvinteAdresa;
 
-	if (adresa.length > 56) {
+	if (adresa.length > maxLength) {
 		if (adresa.includes(' ') == false) {
 			// no white-spaces, assume comma is the separator
 			cuvinteAdresa = adresa.split(',');
@@ -160,16 +160,16 @@ async function modifyPdf() {
 		if (limitSindex < cuvinteAdresa.length) {
 			adr = cuvinteAdresa.slice(0, limitSindex + 1);
 			firstPage.drawText(scoate_diacritice(adr.join(' ')), {
-		    x: 140,
-		    y: 405,
+		    x: 110,
+		    y: 402,
 		    size: 12.4,
 		    font: helveticaFont
 		})
 
 			adr = cuvinteAdresa.slice(limitSindex + 1, cuvinteAdresa.length);
 			firstPage.drawText(scoate_diacritice(adr.join(' ')), {
-		    x: 140,
-		    y: 390,
+		    x: 110,
+		    y: 370,
 		    size: 12.4,
 		    font: helveticaFont
 		})
@@ -177,8 +177,8 @@ async function modifyPdf() {
 	}
 	else {
 		firstPage.drawText(scoate_diacritice(adresa), {
-	    x: 140,
-	    y: 405,
+	    x: 110,
+	    y: 402,
 	    size: 12.4,
 	    font: helveticaFont
 	})
@@ -186,8 +186,8 @@ async function modifyPdf() {
 
 	  let zi = document.getElementsByName("zi")[0].value;
 	  firstPage.drawText(zi, {
-	    x: 169,
-	    y: 586,
+	    x: 175,
+	    y: 590,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
@@ -195,15 +195,15 @@ async function modifyPdf() {
 	  let luna = document.getElementsByName("luna")[0].value;
 	  firstPage.drawText(luna, {
 	    x: 211,
-	    y: 586,
+	    y: 590,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
 
 	  let an = document.getElementsByName("an")[0].value;
 	  firstPage.drawText(an, {
-	    x: 253,
-	    y: 586,
+	    x: 249,
+	    y: 590,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
@@ -261,7 +261,7 @@ async function modifyPdf() {
 	  const pngDims = pngImage.scale(toScale);
 	  firstPage.drawImage(pngImage, {
 	        x: 380,
-	        y: 100,
+	        y: 110,
 	        width: pngDims.width,
 	        height: pngDims.height,
 	      })

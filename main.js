@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', function onload(){
 	today = yyyy+'-'+mm+'-'+dd;
 
 	document.getElementById("data_curenta").value = today;
-	var fields = ["nume", "prenume", "zi", "luna", "an", "adresa", "deplasare"];
+	var fields = ["nume", "domiciliu", "zi", "luna", "an", "resedinta", "localitate", "organizatie", "sediu", "punctLucru"];
 	for (let i = 0; i < fields.length; ++i) {
 	  	let result = localStorage.getItem(fields[i]);
 		let current = document.getElementsByName(fields[i])[0];
