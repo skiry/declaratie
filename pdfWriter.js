@@ -87,6 +87,10 @@ async function modifyPdf() {
 	  const acroForm = getAcroForm(pdfDoc);
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
 
+
+	  console.log("FIELDS:")
+	  logAcroFieldNames(pdfDoc);
+	  console.log(acroForm)
 	  function scoate_diacritice(cuvant) {
 	  	var diacritice = [
 	  	['Ă', 'A'], ['ă', 'a'], 
@@ -191,8 +195,6 @@ async function modifyPdf() {
 			fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
 	  	}
 	  }
-	  console.log("FIELDS:")
-	  logAcroFieldNames(pdfDoc);
 
 	  const mycanvas = document.getElementById("signature-pad"); //get your canvas
       const pngUrl = mycanvas.toDataURL("image/png"); //Convert
