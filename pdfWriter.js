@@ -86,11 +86,8 @@ async function modifyPdf() {
 
 	  const acroForm = getAcroForm(pdfDoc);
 	  acroForm.set(PDFName.of('NeedAppearances'), PDFBool.True);
+	  // logAcroFieldNames(pdfDoc);
 
-
-	  console.log("FIELDS:")
-	  logAcroFieldNames(pdfDoc);
-	  console.log(acroForm)
 	  function scoate_diacritice(cuvant) {
 	  	var diacritice = [
 	  	['Ă', 'A'], ['ă', 'a'], 
@@ -108,18 +105,17 @@ async function modifyPdf() {
 	  	return cuvant;
 	  }
 
-	  var fields = ["nume", "domiciliu", "adresa", "localitate", 
-	  				"organizatie", "sediu", "punctLucru", convertData("data_curenta")];
-	  var locations = [[164, 666], [341, 666], [60, 507], 
-	  				   [60, 507], [60, 507], [60, 507], [60, 507],
-	  				   [161, 83]];
-	  var sizes = [12.4, 12.4, 14, 
-	  			   14, 14, 14, 14,
-	  			   19.6];
+	  var fields = ["nume", "domiciliu", "resedinta", "localitate", 
+	  				"organizatie", "sediu", convertData("data_curenta")];
+	  var locations = [[164, 675], [164, 641], [164, 607], 
+	  				   [464, 541], [140, 400], [120, 360],
+	  				   [110, 130]];
+	  var sizes = [12.4, 12.4, 14, 14,
+	  			   14, 14, 19.6];
 
 	  for (let i = 0; i < fields.length; ++i) {
 		let value = fields[i];
-		if (i < 7) {
+		if (i < 6) {
 			value = document.getElementsByName(fields[i])[0].value;
 			value = scoate_diacritice(value);
 		}
@@ -132,10 +128,66 @@ async function modifyPdf() {
 	  })
 	}
 
+
+ 	let adresa = document.getElementsByName("punctLucru")[0].value;
+	let maxLength = 56;
+	let cuvinteAdresa;
+
+	if (adresa.length > 56) {
+		if (adresa.includes(' ') == false) {
+			// no white-spaces, assume comma is the separator
+			cuvinteAdresa = adresa.split(',');
+		}
+		else {
+			// there is at least one ws, assume this the the separator as it should be....
+			cuvinteAdresa = adresa.split(' ');
+		}
+
+		let limitSatisfied = true;
+		let limitSindex = 0;
+		let currentLength = 0;
+		while (limitSatisfied && limitSindex < cuvinteAdresa.length) {
+			if (currentLength + cuvinteAdresa[limitSindex].length + 1 < maxLength) {
+				currentLength += cuvinteAdresa[limitSindex].length + 1;
+				limitSindex += 1;
+			}
+			else {
+				limitSatisfied = false;
+			}
+		}
+		let adr;
+
+		if (limitSindex < cuvinteAdresa.length) {
+			adr = cuvinteAdresa.slice(0, limitSindex + 1);
+			firstPage.drawText(scoate_diacritice(adr.join(' ')), {
+		    x: 162,
+		    y: 300,
+		    size: 12.4,
+		    font: helveticaFont
+		})
+
+			adr = cuvinteAdresa.slice(limitSindex + 1, cuvinteAdresa.length);
+			firstPage.drawText(scoate_diacritice(adr.join(' ')), {
+		    x: 162,
+		    y: 270,
+		    size: 12.4,
+		    font: helveticaFont
+		})
+		}
+	}
+	else {
+		firstPage.drawText(scoate_diacritice(adresa), {
+	    x: 162,
+	    y: 300,
+	    size: 12.4,
+	    font: helveticaFont
+	})
+	}
+
 	  let zi = document.getElementsByName("zi")[0].value;
 	  firstPage.drawText(zi, {
 	    x: 164,
-	    y: 641,
+	    y: 561,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
@@ -143,7 +195,7 @@ async function modifyPdf() {
 	  let luna = document.getElementsByName("luna")[0].value;
 	  firstPage.drawText(luna, {
 	    x: 206,
-	    y: 641,
+	    y: 571,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
@@ -151,7 +203,7 @@ async function modifyPdf() {
 	  let an = document.getElementsByName("an")[0].value;
 	  firstPage.drawText(an, {
 	    x: 248,
-	    y: 641,
+	    y: 581,
 	    size: 12.4,
 	    font: helveticaFont
 	  })
@@ -209,7 +261,7 @@ async function modifyPdf() {
 	  const pngDims = pngImage.scale(toScale);
 	  firstPage.drawImage(pngImage, {
 	        x: 380,
-	        y: 60,
+	        y: 90,
 	        width: pngDims.width,
 	        height: pngDims.height,
 	      })
