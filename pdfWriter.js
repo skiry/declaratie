@@ -107,10 +107,10 @@ async function modifyPdf() {
 
 	  var fields = ["nume", "domiciliu", "resedinta", "localitate", 
 	  				"organizatie", "sediu", convertData("data_curenta")];
-	  var locations = [[175, 666], [175, 640], [175, 600], 
-	  				   [470, 590], [263, 450], [167, 435],
+	  var locations = [[175, 668], [175, 641], [175, 614], 
+	  				   [390, 590], [264, 455], [168, 440],
 	  				   [110, 127]];
-	  var sizes = [12.4, 12.4, 14, 14,
+	  var sizes = [14, 14, 14, 14,
 	  			   14, 14, 19.6];
 
 	  for (let i = 0; i < fields.length; ++i) {
@@ -169,7 +169,7 @@ async function modifyPdf() {
 			adr = cuvinteAdresa.slice(limitSindex + 1, cuvinteAdresa.length);
 			firstPage.drawText(scoate_diacritice(adr.join(' ')), {
 		    x: 110,
-		    y: 370,
+		    y: 382,
 		    size: 12.4,
 		    font: helveticaFont
 		})
