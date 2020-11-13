@@ -14,10 +14,13 @@
 
   <body>
 
-  	<div style="background-color: lightblue; text-align: center">
-  		<h1>
-  			NOU! A FOST ACTUALIZATA DECLARATIA PENTRU STAREA DE ALERTA!
-  		</h1>
+  	<div style="text-align: center">
+  	<h1>
+  		<span class="nice">
+  			ULTIMA ACTUALIZARE: 13 NOIEMBRIE 2020
+  		</span>
+  	</h1>
+
   	</div>
   	<div class="container" style="text-align: center">
   		<h2>DECLARAȚIE PE PROPRIE RĂSPUNDERE</h2>
@@ -28,25 +31,35 @@
 
   		<div class="row">
   			<div class="col-20">
-	      		<label for="nume">Nume</label>
+	      		<label for="nume">Subsemnatul/a</label>
 	  		</div>
 	  		<div class="col-80">
-	      		<input type="text" name="nume" placeholder="Numele de familie" required>
+	      		<input type="text" name="nume" placeholder="Numele și prenumele" required>
 	      	</div>
    		</div>
 
    		<div class="row">
   			<div class="col-20">
-	      		<label for="prenume">Prenume</label>
+	      		<label for="domiciliu">domiciliat/ă în:</label>
 	  		</div>
 	  		<div class="col-80">
-	      		<input type="text" name="prenume" placeholder="Prenume" required>
+	      		<input type="text" name="domiciliu" placeholder="Adresă domiciliu" required>
 	      	</div>
    		</div>
 
    		<div class="row">
   			<div class="col-20">
-	      		<label for="data">Data nașterii</label>
+	      		<label for="adresa">cu reședința în fapt în:</label>
+	  		</div>
+	  		<div class="col-80">
+	      		<input type="text" name="adresa" placeholder="Adresa unde locuiți acum" required>
+	      	</div>
+   		</div>
+
+
+   		<div class="row">
+  			<div class="col-20">
+	      		<label for="data">născut/ă în data de:</label>
 	  		</div>
 	  		<div class="col-80">
 	  			<input type="number" name="zi" min="1" max="31" placeholder="zi" style="width: 23.7%">
@@ -57,88 +70,50 @@
 
    		<div class="row">
   			<div class="col-20">
-	      		<label for="adresa">Adresa locuinței</label>
+	      		<label for="localitate">în localitatea:</label>
 	  		</div>
 	  		<div class="col-80">
-	      		<textarea name="adresa" placeholder="Adresa unde locuiti acum" required></textarea>
-      			<p style="font-size: 15px;">Se va completa adresa locuinței în care persoana locuiește în fapt, indiferent dacă este identică sau nu cu cea menționată în actul de identitate</p>
+	      		<textarea name="localitate" placeholder="Localitate" required></textarea>
 	      	</div>
    		</div>
-
-   		<div class="row">
-  			<div class="col-20">
-	      		<label for="deplasare">Locul / locurile deplasării</label>
-	  		</div>
-	  		<div class="col-80">
-	      		<textarea name="deplasare" placeholder="Locurile in care doriți să mergeți" required></textarea>
-      			<p style="font-size: 15px;">Se vor menționa locurile în care persoana se deplasează, în ordinea în care aceasta intenționează să-și desfășoare traseul</p>
-	      	</div>
-   		</div>
-
+      	
+      	<p>declar pe proprie răspundere, cunoscând prevederile articolului 326 din Codul Penal privind falsul în declarații, că mă deplasez în afara locuinței, în intervalul orar 23.00 – 05.00, din următorul/următoarele motive:</p>		
 
       	<h3>Motivul deplasării în afara localității / zonei metropolitane:</h3>
 
-      	<label class="container_cb">1. interes profesional, inclusiv între locuință/gospodărie și locul/locurile de desfășurare a
-		activității profesionale și înapoi
+      	<label class="container_cb">
+      		1. În interes profesional. Menționez că îmi desfășor activitatea profesională la instituția/societatea/organizația
+      	<input type="checkbox" name="cb">
+      	<textarea name="organizatie" placeholder="instituția/societatea/organizația" required></textarea>
+
+      	cu sediul în
+      	<textarea name="sediu" placeholder="locația sediului" required></textarea>
+
+      	și cu punct/e de lucru la următoarele adrese:
+      	<textarea name="punctLucru" placeholder="punct/e de lucru" required></textarea>		  
+
+		  <span class="checkmark"></span>
+		</label>
+
+		<label class="container_cb">2. Asistență medicală care nu poate fi amânată și nici realizată de la distanță
 		  <input type="checkbox" name="cb">
 		  <span class="checkmark"></span>
 		</label>
 
-		<label class="container_cb">2. în scop umanitar sau de voluntariat
+		<label class="container_cb">3. Achiziționarea de medicamente
 		  <input type="checkbox" name="cb">
 		  <span class="checkmark"></span>
 		</label>
 
-		<label class="container_cb">3. realizarea de activități agricole
+		<label class="container_cb">4. Îngrijirea/însoțirea copilului și/sau asistența persoanelor vârstnice, bolnave sau cu dizabilități
 		  <input type="checkbox" name="cb">
 		  <span class="checkmark"></span>
 		</label>
 
-		<label class="container_cb">4. pentru comercializarea de produse agroalimentare de către producătorii agricoli
+		<label class="container_cb">5. Deces al unui membru al familiei
 		  <input type="checkbox" name="cb">
 		  <span class="checkmark"></span>
 		</label>
-
-		<label class="container_cb">5. îngrijirea sau administrarea unei proprietăți din altă localitate; eliberarea de documente
-		necesare pentru obținerea unor drepturi
-		  <input type="checkbox" name="cb">
-		  <span class="checkmark"></span>
-		</label>
-
-		<label class="container_cb">6. participarea la programe sau proceduri în centrele de tratament
-		  <input type="checkbox" name="cb">
-		  <span class="checkmark"></span>
-		</label>
-
-		<label class="container_cb">7. asistență medicală care nu poate fi amânată și nici realizată de la distanță
-		  <input type="checkbox" name="cb">
-		  <span class="checkmark"></span>
-		</label>
-
-		<label class="container_cb">8. activități recreativ-sportive individuale desfășurate în aer liber (ciclism, drumeție,
-		alergare, canotaj, alpinism, vânătoare, pescuit și altele) cu participarea a cel mult 3 persoane
-		  <input type="checkbox" name="cb">
-		  <span class="checkmark"></span>
-		</label>
-
-		<label class="container_cb">9. participarea la evenimente familiale, cu un număr limitat de persoane și respectarea
-		regulilor de distanțare socială
-		  <input type="checkbox" name="cb">
-		  <span class="checkmark"></span>
-		</label>
-
-		<label class="container_cb">10. pentru achiziția, service-ul, efectuarea ITP sau alte operațiuni de întreținere a
-		vehiculelor, activități care nu pot fi efectuate în localitatea de domiciliu
-		  <input type="checkbox" name="cb">
-		  <span class="checkmark"></span>
-		</label>
-
-		<label class="container_cb">11. alte motive justificate (<i>precum: îngrijirea/însoțirea copiilor/membrilor de familie;
-			îngrijirea unei rude/afin sau persoană aflată în întreținere; asistența persoanelor vârstnice, bolnave sau cu dizabilități; deces al unui membru de familie, asigurarea de bunuri care acoperă necesitățile de bază ale persoanelor și animalelor de companie/domestice</i>).
-
-		  <input type="checkbox" name="cb">
-		  <span class="checkmark"></span>
-		</label>      	
 
       	<div class="row">
   			<div class="col-20">
@@ -161,7 +136,9 @@
 	      	</div>
    		</div>
 
-
+	<p style="font-size: 15px;">*Declarația pe propria răspundere poate fi scrisă de mână, cu condiția preluării tuturor elementelor prezentate mai sus.</p>
+	<p style="font-size: 15px;">**Declarația pe propria răspundere poate fi stocată și prezentată pentru control pe dispozitive electronice mobile, cu condiția ca pe documentul prezentat să existe semnătura olografă a persoanei care folosește Declarația și data pentru care este valabilă declarația.
+  	</p>
 
     <p style="font-size: 15px;">(Puteti salva documentul care se va deschide sau puteti face un screenshot)</p>
 	  <input type="button" id="getPdf" onclick="modifyPdf()" value="Descarcă declarația">
@@ -185,7 +162,7 @@
 
 	<button class="accordion"><i class="arrow down"></i> Pot avea declaratia pe proprie raspundere doar pe telefon?</button>
 	<div class="panel">
-	  <p>Da. Dupa cum este specificat si pe siteul <a href="https://www.mai.gov.ro/formular-sts-ro-platforma-electronica-pentru-completarea-online-a-declaratiilor-pe-proprie-raspundere-si-a-adeverintelor-de-angajator/">mai.gov.ro</a>, "persoanele pot prezenta declarația pe proprie răspundere/adeverința de angajator direct de pe telefon (cu semnătură olografă aplicată) împreună cu actul de identitate".</p>
+	  <p>Da. Dupa cum este specificat si in documentul oficial, trebuie ca in documentul prezentat "să existe semnătura olografă a persoanei care folosește Declarația și data pentru care este valabilă declarația". Acest document indeplineste ambele conditii daca este completat corespunzator.</p>
 	</div>
 
   	</div>

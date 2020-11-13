@@ -75,7 +75,7 @@ async function modifyPdf() {
     }
 
 	const main = async function () {
-	  const url = './declaratie-alerta.pdf';
+	  const url = './declaratie-nov-own.pdf';
 	  const existingPdfBytes = await fetch(url).then(res => res.arrayBuffer());
 
 	  // Load a PDFDocument from the existing PDF bytes
@@ -104,13 +104,18 @@ async function modifyPdf() {
 	  	return cuvant;
 	  }
 
-	  var fields = ["nume", "prenume", "deplasare", convertData("data_curenta")];
-	  var locations = [[164, 666], [341, 666], [60, 507], [161, 83]];
-	  var sizes = [12.4, 12.4, 14, 19.6];
+	  var fields = ["nume", "domiciliu", "adresa", "localitate", 
+	  				"organizatie", "sediu", "punctLucru", convertData("data_curenta")];
+	  var locations = [[164, 666], [341, 666], [60, 507], 
+	  				   [60, 507], [60, 507], [60, 507], [60, 507],
+	  				   [161, 83]];
+	  var sizes = [12.4, 12.4, 14, 
+	  			   14, 14, 14, 14,
+	  			   19.6];
 
 	  for (let i = 0; i < fields.length; ++i) {
 		let value = fields[i];
-		if (i < 3) {
+		if (i < 7) {
 			value = document.getElementsByName(fields[i])[0].value;
 			value = scoate_diacritice(value);
 		}
@@ -122,61 +127,6 @@ async function modifyPdf() {
 	    font: helveticaFont
 	  })
 	}
-
-	  let adresa = document.getElementsByName("adresa")[0].value;
-	  let maxLength = 56;
-	  let cuvinteAdresa;
-
-	  if (adresa.length > 56) {
-	  	if (adresa.includes(' ') == false) {
-	  		// no white-spaces, assume comma is the separator
-	  		cuvinteAdresa = adresa.split(',');
-	  	}
-	  	else {
-	  		// there is at least one ws, assume this the the separator as it should be....
-	  		cuvinteAdresa = adresa.split(' ');
-	  	}
-
-	  	let limitSatisfied = true;
-	  	let limitSindex = 0;
-	  	let currentLength = 0;
-	  	while (limitSatisfied && limitSindex < cuvinteAdresa.length) {
-	  		if (currentLength + cuvinteAdresa[limitSindex].length + 1 < maxLength) {
-	  			currentLength += cuvinteAdresa[limitSindex].length + 1;
-	  			limitSindex += 1;
-	  		}
-	  		else {
-	  			limitSatisfied = false;
-	  		}
-	  	}
-	  	let adr;
-
-	  	if (limitSindex < cuvinteAdresa.length) {
-	  		adr = cuvinteAdresa.slice(0, limitSindex + 1);
-	  		firstPage.drawText(scoate_diacritice(adr.join(' ')), {
-			    x: 162,
-			    y: 614,
-			    size: 12.4,
-			    font: helveticaFont
-			})
-
-	  		adr = cuvinteAdresa.slice(limitSindex + 1, cuvinteAdresa.length);
-	  		firstPage.drawText(scoate_diacritice(adr.join(' ')), {
-			    x: 162,
-			    y: 589,
-			    size: 12.4,
-			    font: helveticaFont
-			})
-	  	}
-	  }
-  	else {
-  		firstPage.drawText(scoate_diacritice(adresa), {
-		    x: 162,
-		    y: 614,
-		    size: 12.4,
-		    font: helveticaFont
-		})
-  	}
 
 	  let zi = document.getElementsByName("zi")[0].value;
 	  firstPage.drawText(zi, {
@@ -204,7 +154,7 @@ async function modifyPdf() {
 
 	  let checkboxes = document.getElementsByName("cb");
 	  let found = 0;
-	  for(let i = 2; i < 11; ++i) {
+	  for(let i = 2; i < 5; ++i) {
 	  	if (checkboxes[i].checked) {
 	  		found = i;
 	  		fillInRadioButton(pdfDoc, 'Check Box'.concat((i + 1).toString()), 'Check Box1');
@@ -241,7 +191,8 @@ async function modifyPdf() {
 			fillInRadioButton(pdfDoc, 'Check Box2', 'Check Box1');
 	  	}
 	  }
-	  //logAcroFieldNames(pdfDoc);
+	  console.log("FIELDS:")
+	  logAcroFieldNames(pdfDoc);
 
 	  const mycanvas = document.getElementById("signature-pad"); //get your canvas
       const pngUrl = mycanvas.toDataURL("image/png"); //Convert
@@ -267,7 +218,7 @@ async function modifyPdf() {
 		//const blobURL = URL.createObjectURL(blob);
 		//window.open(blobURL)
 
-	  let numeFisier = "declaratie-proprie-raspundere-".concat(document.getElementsByName("prenume")[0].value).concat(".pdf");
+	  let numeFisier = "declaratie-proprie-raspundere-".concat(document.getElementsByName("nume")[0].value).concat(".pdf");
 	  // Trigger the browser to download the PDF document
 	  download(pdfBytes, numeFisier, "application/pdf");
 	 }

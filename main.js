@@ -64,7 +64,7 @@ document.addEventListener('DOMContentLoaded', function onload(){
 }, false);
 
 function saveText(e) {
-	var fields = ["nume", "prenume", "zi", "luna", "an", "adresa", "deplasare"];
+	var fields = ["nume", "domiciliu", "zi", "luna", "an", "adresa", "localitate", "organizatie", "sediu", "punctLucru"];
 	for (let i = 0; i < fields.length; ++i) {
 		localStorage.setItem(fields[i], document.getElementsByName(fields[i])[0].value);
 	} 	

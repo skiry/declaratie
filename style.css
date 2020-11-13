@@ -193,6 +193,14 @@ input[type=button]:hover {
   -webkit-transform: rotate(45deg);
 }
 
+.nice {
+  height:45px;
+  border-radius:150px;
+  position:relative;
+  background: linear-gradient(60deg, #f79533, #f37055, #ef4e7b, #a166ab, #5073b8, #1098ad, #07b39b, #6fba82);
+  cursor:pointer;
+}
+
 /* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
 @media screen and (max-width: 600px) {
   .col-20, .col-80, input[type=button] {
